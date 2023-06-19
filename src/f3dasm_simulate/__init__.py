@@ -1,12 +1,12 @@
 """
-bessa-pypi-template - Template repository for Python packages following
+f3dasm_simulate - Simulation extension of f3dasm
 the Bessa Group's conventions
 
 This package contains a template for Python packages following
 the Bessa Group's conventions.
 
 Usage:
-  import bessa-pypi-template
+  import f3dasm_simulate
 
 Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 """

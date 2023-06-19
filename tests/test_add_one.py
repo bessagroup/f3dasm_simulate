@@ -1,7 +1,7 @@
 import pytest
 
-import bessapypitemplate
+import f3dasm_simulate
 
 
 def test_add_one():
-    assert bessapypitemplate.add_one(1) == 2
+    assert f3dasm_simulate.add_one(1) == 2
