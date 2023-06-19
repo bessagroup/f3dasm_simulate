@@ -1,8 +1,4 @@
-<p align="center">
-  <a href=""><img alt="logo" src="https://user-images.githubusercontent.com/25851824/200928507-a65327f9-bc70-4c12-beaa-bc6ba74d968e.svg" width="60%"></a>
-</p>
-
-## f3dasn_simulate
+## f3dasm_simulate
       
 **Authors**:
 - Martin van der Schelling ([M.P.vanderSchelling@tudelft.nl](mailto:M.P.vanderSchelling@tudelft.nl))
@@ -25,7 +21,7 @@
 
 ### Summary
 
-This repository is an extension to [`f3dasm`: Framework for data-driven design & analysis of structures and material](https://github.com/bessagroup/f3dasm).
+This repository is an extension to [`f3dasm`: Framework for data-driven design & analysis of structures and materials](https://github.com/bessagroup/f3dasm).
 
 
 
