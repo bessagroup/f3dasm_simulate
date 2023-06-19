@@ -1,9 +1,9 @@
-name: Pull request to pr/** branches
+name: Pull request from pr/** branches
 
 on:
   pull_request:
     branches:
-      - "pr/**"
+      - "main"
 
 jobs:
   check-coding-style:
