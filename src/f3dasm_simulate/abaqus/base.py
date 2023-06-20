@@ -1,9 +1,6 @@
 #                                                                       Modules
 # =============================================================================
 
-# Third party
-from turtle import color
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -84,7 +81,7 @@ class MicrosctuctureGenerator:
         fig_name: str = "rgmsh.png",
         **kwarg,
     ) -> None:
-        """contour or voxel plot of the discrete microstructure 
+        """contour or voxel plot of the discrete microstructure
 
         Parameters
         ----------
@@ -96,7 +93,7 @@ class MicrosctuctureGenerator:
         if self.fiber_positions.shape[1] == 4:
             fig = plt.figure(**kwarg)
             ax = fig.add_subplot(111)
-            im = ax.imshow(
+            _ = ax.imshow(
                 self.rgmsh.T,
                 origin="lower",
                 interpolation="None",
@@ -126,7 +123,7 @@ class MicrosctuctureGenerator:
         width: float,
         vol_frac: float,
         save_figure: bool = False,
-        fig_name: str = "microstrcuture.png",
+        fig_name: str = "microstructure.png",
         **kwargs,
     ) -> None:
         """2d rve plot for circle inclusion
@@ -136,9 +133,9 @@ class MicrosctuctureGenerator:
         fibers : np.ndarray
             fiber locations/positions
         length : float
-            length of the rve 
+            length of the rve
         width : float
-            with of the rve 
+            with of the rve
         vol_frac : float
             reached volume fraction
         save_figure : bool, optional
@@ -220,7 +217,7 @@ class MicrosctuctureGenerator:
         fig_name : str, optional
             fig name, by default "cubic_rve.png"
         """
-        # TODO refine this function with better color scheme, 
+        # TODO refine this function with better color scheme,
         fig = plt.figure()
         ax = fig.add_subplot(projection="3d")
         # Plot the surface

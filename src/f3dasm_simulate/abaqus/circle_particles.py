@@ -131,7 +131,7 @@ class CircleParticles(MicrosctuctureGenerator):
     def plot_microstructure(
         self,
         save_figure: bool = False,
-        fig_name: str = "mircostructure.png",
+        fig_name: str = "microstructure.png",
         **kwargs,
     ) -> None:
         self.cricle_plot(
@@ -643,7 +643,7 @@ class CircleParticles(MicrosctuctureGenerator):
         new_fiber : np.ndarray
             new fiber location
         fiber_pos : np.ndarray
-            original fibers 
+            original fibers
         dist_factor : float
             distance factor which used to control the minimum distance between to fibers
         fiber_index : int, optional
@@ -791,8 +791,8 @@ class CircleParticles(MicrosctuctureGenerator):
             The considering fiber
         dist_factor : float
             the minimum distance factor between two fibers
-        rng: any 
-            randome generator 
+        rng: any
+            randome generator
 
         Returns
         -------

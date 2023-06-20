@@ -5,8 +5,11 @@ Example module
 #                                                                       Modules
 # =============================================================================
 
+import os
 # Standard
 from pathlib import Path
+
+import f3dasm_simulate
 
 # Local
 from .loading import Loading
@@ -43,6 +46,9 @@ class SimulatorInfo:
         sim_info.update(self.material.to_dict())
         sim_info.update(self.microstructure.to_dict())
         sim_info.update(self.loading.to_dict())
+
+        sim_info['sim_path'] = self.sim_path
+        sim_info['sim_script'] = self.sim_script
         return sim_info
 
 
@@ -71,9 +77,9 @@ class AbaqusInfo:
 class FolderInfo:
     def __init__(
             self,
-            main_work_directory: Path = Path().absolute() / Path("Data"),
-            script_path: str = None,
-            current_work_directory: str = None,
+            main_work_directory: str = str(Path().absolute() / Path("Data")),
+            script_path: str = os.path.dirname(f3dasm_simulate.__file__) + "/scriptbase",
+            current_work_directory: str = 'case_0',
             post_path: str = "basic_analysis_scripts.post_process",
             post_script: str = "PostProcess2D"):
 
@@ -83,6 +89,8 @@ class FolderInfo:
         self.current_work_directory = current_work_directory
         self.post_path = post_path
         self.post_script = post_script
+        self.sim_path = None
+        self.sim_script = None
 
     def to_dict(self) -> dict:
         return self.__dict__
@@ -93,8 +101,9 @@ class FolderInfo:
         #         'post_script': self.post_script}
 
 
-def combine_abaqus_and_simulation_info(abaqus_info: AbaqusInfo, simulation_info: SimulatorInfo) -> dict:
+def combine_info(abaqus_info: AbaqusInfo, simulation_info: SimulatorInfo, folder_info: FolderInfo) -> dict:
     d = {}
     d.update(abaqus_info.to_dict())
     d.update(simulation_info.to_dict())
+    d.update(folder_info.to_dict())
     return d

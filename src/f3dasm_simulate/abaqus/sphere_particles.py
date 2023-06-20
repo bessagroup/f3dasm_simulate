@@ -1743,16 +1743,16 @@ class SphereParticles(MicrosctuctureGenerator):
         fiber_index: int = 0,
         stage: str = "step_one",
     ) -> int:
-        """overlap check of the new fiber and the orginal ones 
+        """overlap check of the new fiber and the orginal ones
 
         Parameters
         ----------
         new_fiber : np.ndarray
             new fiber location
         fiber_pos : np.ndarray
-            original fiber locations 
+            original fiber locations
         dist_factor : float
-            distance factor 
+            distance factor
         fiber_index : int, optional
             fiber index, by default 0
         stage : str, optional
@@ -1761,7 +1761,7 @@ class SphereParticles(MicrosctuctureGenerator):
         Returns
         -------
         int
-            a flag to indicate overlap status 
+            a flag to indicate overlap status
 
         Raises
         ------
@@ -1892,7 +1892,7 @@ class SphereParticles(MicrosctuctureGenerator):
         dist_factor : float
             the minimum distance factor between two fibers
         ang: any
-            a random generator 
+            a random generator
 
         Returns
         -------

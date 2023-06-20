@@ -10,8 +10,8 @@ class VonMisesPlasticElasticPathLoads(SimulatorInfo):
         super().__init__(material, microstructure, loading)
 
         # Reference to the python script that will be used to run the simulation
-        self.sim_path = "benchmark_abaqus_scripts.two_materials_rve",
-        self.sim_script = "VonMisesPlasticElasticPathLoads",
+        self.sim_path = "benchmark_abaqus_scripts.two_materials_rve"
+        self.sim_script = "VonMisesPlasticElasticPathLoads"
 
     def _run_checks(self):
         # Check if the material is not plastic

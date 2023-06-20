@@ -11,6 +11,8 @@
 extend-exclude =
 	docs/
     tests/
+    src/f3dasm_simulate/scriptbase/
+    notebooks/
 
 # <<< UPDATE ACCORDING WITH YOUR PYTHON PROJECT
 

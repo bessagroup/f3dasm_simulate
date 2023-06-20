@@ -16,7 +16,7 @@ from f3dasm.simulation import Simulator
 
 # Local
 from .simulator_assertinputs import AssertInputs
-from .simulator_info import AbaqusInfo, FolderInfo, SimulatorInfo
+from .simulator_info import AbaqusInfo, FolderInfo, SimulatorInfo, combine_info
 from .utils import create_dir, print_banner, write_json
 
 #                                                        Authorship and Credits
@@ -30,14 +30,21 @@ __status__ = 'Stable'
 
 
 class AbaqusSimulator(Simulator, AssertInputs):
-    def __init__(self, sim_info: SimulatorInfo, folder_info: FolderInfo, abaqus_info: AbaqusInfo):
-        self.sim_info = sim_info.to_dict()
+    def __init__(self, simulation_info: SimulatorInfo, folder_info: FolderInfo, abaqus_info: AbaqusInfo):
+        # TODO: sim_info is a combination of simulation_info and abaqus_info, hence making it redundant
         self.folder_info = folder_info
         self.abaqus_info = abaqus_info
         self.abaqus_input_file = "sim_info.json"
 
+        # Add the sim_path and sim_script to the sim_info
+        self.folder_info.sim_path = simulation_info.sim_path
+        self.folder_info.sim_script = simulation_info.sim_script
+
+        self.sim_info = combine_info(abaqus_info=abaqus_info,
+                                     simulation_info=simulation_info, folder_info=folder_info)
+
         self.is_inputs_proper_defined(
-            folder_info=folder_info.to_dict(), sim_info=sim_info.to_dict()
+            folder_info=folder_info.to_dict(), sim_info=self.sim_info
         )
 
     def run(self,
@@ -56,7 +63,7 @@ class AbaqusSimulator(Simulator, AssertInputs):
 
     def pre_process(self, folder_index: int = None,
                     sub_folder_index: int = None,
-                    third_folder_index: int = None) -> None:
+                    third_folder_index: int = 0) -> None:
         # number of samples
         self._create_working_folder(
             folder_index,
@@ -152,7 +159,7 @@ class AbaqusSimulator(Simulator, AssertInputs):
         refresh_time: float = 5.0,
     ) -> str:
 
-        if self.platform == "ubuntu":
+        if self.abaqus_info.platform == "ubuntu":
 
             proc = subprocess.Popen(command, shell=True)
 
@@ -166,7 +173,7 @@ class AbaqusSimulator(Simulator, AssertInputs):
                 end_time = time.perf_counter()
                 #
                 try:
-                    file = open(self.job_name + ".msg")
+                    file = open(self.abaqus_info.job_name + ".msg")
                     word1 = "THE ANALYSIS HAS BEEN COMPLETED"
                     if word1 in file.read():
                         proc.kill()
@@ -214,21 +221,21 @@ class AbaqusSimulator(Simulator, AssertInputs):
                 file.write("import json \n")
                 file.write(
                     "sys.path.extend(['"
-                    + str(self.folder_info["script_path"])
+                    + str(self.folder_info.script_path)
                     + "']) \n"
                 )
                 file.write(
                     "from "
-                    + str(self.folder_info["sim_path"])
+                    + str(self.folder_info.sim_path)
                     + " import "
-                    + str(self.folder_info["sim_script"])
+                    + str(self.folder_info.sim_script)
                     + "\n"
                 )
                 line = "file = '" + str(self.abaqus_input_file) + "' \n"
                 file.write(line)
                 file.write("with open(file, 'r') as f:\n")
                 file.write("	dict = json.load(f)\n")
-                file.write(str(self.folder_info["sim_script"]) + "(dict)\n")
+                file.write(str(self.folder_info.sim_script) + "(dict)\n")
             file.close()
         elif status == "post_process":
             with open(file_name, "w") as file:
@@ -236,20 +243,20 @@ class AbaqusSimulator(Simulator, AssertInputs):
                 file.write("import sys\n")
                 file.write(
                     "sys.path.extend(['"
-                    + str(self.folder_info["script_path"])
+                    + str(self.folder_info.script_path)
                     + "']) \n"
                 )
                 file.write(
                     "from "
-                    + str(self.folder_info["post_path"])
+                    + str(self.folder_info.post_path)
                     + " import "
-                    + str(self.folder_info["post_script"])
+                    + str(self.folder_info.post_script)
                     + "\n"
                 )
                 file.write(
-                    str(self.folder_info["post_script"])
+                    str(self.folder_info.post_script)
                     + "('"
-                    + str(self.job_name)
+                    + str(self.abaqus_info.job_name)
                     + "')\n"
                 )
             file.close()
@@ -348,7 +355,7 @@ class AbaqusSimulator(Simulator, AssertInputs):
             elif third_folder_index is None:
                 raise ValueError("provide third_folder_index")
             else:
-                self.folder_info["current_work_directory"] = (
+                self.folder_info.current_work_directory = (
                     "gen_"
                     + str(folder_index)
                     + "/point_"

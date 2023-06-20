@@ -5,12 +5,15 @@ Material module for the simulation
 #                                                                       Modules
 # =============================================================================
 
+# Standard
 from abc import ABC
 from typing import List
 
+# Third party
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Local
 from .simulator_part import SimulatorPart
 
 #                                                        Authorship and Credits
