@@ -4,7 +4,7 @@
 import json
 import math
 import time
-from typing import List
+from typing import Tuple
 
 # third-party
 import numpy as np
@@ -1807,7 +1807,7 @@ class SphereParticles(MicrosctuctureGenerator):
         fiber_min_dis_vector: np.ndarray,
         ii: int,
         cycle: int,
-    ) -> List[np.ndarray, int, float]:
+    ) -> Tuple[np.ndarray, int, float]:
         """This function is used to identify the index of closest fiber
         of every fiber, which is very import for the first heuristic
         stirring to get more space placing the new disks.

@@ -4,8 +4,8 @@
 import json
 import math
 import time
+from typing import Tuple
 
-import matplotlib.pyplot as plt
 # Third party
 import numpy as np
 from scipy.spatial import distance_matrix
@@ -645,7 +645,7 @@ class CircleParticles(MicrosctuctureGenerator):
         fiber_pos : np.ndarray
             original fibers 
         dist_factor : float
-            distance factor which used to control the minimum distance between to fibers 
+            distance factor which used to control the minimum distance between to fibers
         fiber_index : int, optional
             fiber index , by default 0
         stage : str, optional
@@ -654,14 +654,13 @@ class CircleParticles(MicrosctuctureGenerator):
         Returns
         -------
         int
-            a flag number (1: overlap, 0: non-overlap) 
+            a flag number (1: overlap, 0: non-overlap)
 
         Raises
         ------
         ValueError
             not defined stage
         """
-
 
         fiber_pos = fiber_pos.copy()
 
@@ -684,7 +683,7 @@ class CircleParticles(MicrosctuctureGenerator):
                 fiber_pos[:, 0:2], new_fiber[:, 0:2]
             )
             points_dis_temp[
-                fiber_index : fiber_index + int(fiber_pos[fiber_index, 3]), :
+                fiber_index: fiber_index + int(fiber_pos[fiber_index, 3]), :
             ] = math.inf
             points_dis = np.min(points_dis_temp, 1, keepdims=True)
             min_dis = points_dis - min_dis_threhold
@@ -706,7 +705,7 @@ class CircleParticles(MicrosctuctureGenerator):
         fiber_min_dis_vector: np.ndarray,
         ii: int,
         cycle: int,
-    ) -> list[np.ndarray, int, float]:
+    ) -> Tuple[np.ndarray, int, float]:
         """This function is used to identify the index of closest fiber
         of every fiber, which is very import for the first heuristic
         stirring to get more space placing the new disks.
@@ -780,7 +779,7 @@ class CircleParticles(MicrosctuctureGenerator):
         ref_point: np.ndarray,
         fiber_temp: np.ndarray,
         dist_factor: float,
-        rng : any,
+        rng: any,
     ) -> np.ndarray:
         """Move fiber to its reference point
 

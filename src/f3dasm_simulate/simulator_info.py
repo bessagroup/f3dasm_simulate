@@ -49,16 +49,23 @@ class SimulatorInfo:
 class AbaqusInfo:
     def __init__(self, platform: str = "ubuntu", num_cpu: int = 1,
                  print_info: bool = False, simulation_time: float = 1.0,
-                 mesh_partition: int = 50, num_steps: int = 100):
+                 mesh_partition: int = 50, num_steps: int = 100, job_name: str = "job"):
         self.platform = platform
         self.num_cpu = num_cpu
         self.print_info = print_info
         self.simulation_time = simulation_time
         self.mesh_partition = mesh_partition
         self.num_steps = num_steps
+        self.job_name = job_name
 
     def to_dict(self) -> dict:
-        assert NotImplementedError("This method is not implemented yet.")
+        return self.__dict__
+        # return {'platform': self.platform,
+        #         'num_cpu': self.num_cpu,
+        #         'print_info': self.print_info,
+        #         'simulation_time': self.simulation_time,
+        #         'mesh_partition': self.mesh_partition,
+        #         'num_steps': self.num_steps}
 
 
 class FolderInfo:
@@ -78,12 +85,16 @@ class FolderInfo:
         self.post_script = post_script
 
     def to_dict(self) -> dict:
-        assert NotImplementedError("This method is not implemented yet.")
+        return self.__dict__
+        # return {'main_work_directory': self.main_work_directory,
+        #         'script_path': self.script_path,
+        #         'current_work_directory': self.current_work_directory,
+        #         'post_path': self.post_path,
+        #         'post_script': self.post_script}
 
 
-def create_one_dictionary(folder_info: FolderInfo, abaqus_info: AbaqusInfo, simulation_info: SimulatorInfo) -> dict:
+def combine_abaqus_and_simulation_info(abaqus_info: AbaqusInfo, simulation_info: SimulatorInfo) -> dict:
     d = {}
-    d.update(folder_info.to_dict())
     d.update(abaqus_info.to_dict())
     d.update(simulation_info.to_dict())
     return d

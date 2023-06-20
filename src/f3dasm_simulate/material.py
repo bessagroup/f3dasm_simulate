@@ -49,7 +49,10 @@ class CompositeMaterial(SimulatorPart):
 
         # Create the combined material dictionary
         # This doesnt work with two materials that have a hardening law
-        return {**self.matrix_material.to_dict, **self.fiber_material.to_dict}
+
+        # Combine matrix_material and fiber_material
+        return {**self.matrix_material.to_dict(),
+                **self.fiber_material.to_dict()}
 
 
 class HardeningLaw(ABC):
@@ -78,32 +81,6 @@ class HardeningLaw(ABC):
         plt.xlim([0, 1])
         plt.grid("-.")
         plt.show()
-
-#                                                           Material Subclasses
-# =============================================================================
-
-
-class ElasticMaterial(Material):
-    def __init__(self, youngs_modulus: float = 1.0, poisson_ratio: float = 0.19):
-        self.youngs_modulus = youngs_modulus
-        self.poisson_ratio = poisson_ratio
-        self.suffix = ""
-
-    def to_dict(self) -> dict:
-        {f"youngs_modulus{self.suffix}": self.youngs_modulus, f"poisson_ratio{self.suffix}": self.poisson_ratio}
-
-
-class PlasticMaterial(Material):
-    def __init__(self, hardening_law: HardeningLaw, youngs_modulus: float = 100.0, poisson_ratio: float = 0.3):
-        self.hardening_law = hardening_law
-        self.youngs_modulus = youngs_modulus
-        self.poisson_ratio = poisson_ratio
-        self.suffix = ""
-
-    def to_dict(self) -> dict:
-        {f"youngs_modulus{self.suffix}": self.youngs_modulus, f"poisson_ratio{self.suffix}": self.poisson_ratio,
-            'hardening_table': self.hardening_law.hardening_law_table}
-
 
 #                                                                Hardening laws
 # =============================================================================
@@ -134,7 +111,6 @@ class LinearHardeningLaw(HardeningLaw):
         )
 
         hardening_law_table = hardening_law_table.T
-        self.hardening_law_table = hardening_law_table
         return hardening_law_table.tolist()
 
 
@@ -163,7 +139,6 @@ class SwiftHardeningLaw(HardeningLaw):
             yield_stress + a * (hardening_law_table[-1, 1]) ** b
         )
         hardening_law_table = hardening_law_table.T
-        self.hardening_law_table = hardening_law_table
         return hardening_law_table.tolist()
 
 
@@ -194,6 +169,32 @@ class RambergHardeningLaw(HardeningLaw):
         ) ** (1 / b)
 
         hardening_law_table = hardening_law_table.T
-        self.hardening_law_table = hardening_law_table
-
         return hardening_law_table.tolist()
+
+#                                                           Material Subclasses
+# =============================================================================
+
+
+class ElasticMaterial(Material):
+    def __init__(self, youngs_modulus: float = 1.0, poisson_ratio: float = 0.19):
+        self.youngs_modulus = youngs_modulus
+        self.poisson_ratio = poisson_ratio
+        self.suffix = ""
+
+    def to_dict(self) -> dict:
+        return {f"youngs_modulus{self.suffix}": self.youngs_modulus,
+                f"poisson_ratio{self.suffix}": self.poisson_ratio}
+
+
+class PlasticMaterial(Material):
+    def __init__(self, hardening_law: HardeningLaw = LinearHardeningLaw(),
+                 youngs_modulus: float = 100.0, poisson_ratio: float = 0.3):
+        self.hardening_law = hardening_law
+        self.youngs_modulus = youngs_modulus
+        self.poisson_ratio = poisson_ratio
+        self.suffix = ""
+
+    def to_dict(self) -> dict:
+        return {f"youngs_modulus{self.suffix}": self.youngs_modulus,
+                f"poisson_ratio{self.suffix}": self.poisson_ratio,
+                'hardening_table': self.hardening_law.hardening_law_table}

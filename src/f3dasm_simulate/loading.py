@@ -36,7 +36,8 @@ class Loading(SimulatorPart):
 
 
 class PathLoading(Loading):
-    def __init__(self, amplitude_generator: AmplitudeGenerator, strain: List[float] = [0.02, 0.02, 0.02]):
+    def __init__(self, amplitude_generator: AmplitudeGenerator = AmplitudeGenerator(),
+                 strain: List[float] = [0.02, 0.02, 0.02]):
         self.amplitude_generator = amplitude_generator
         self.strain = strain
 

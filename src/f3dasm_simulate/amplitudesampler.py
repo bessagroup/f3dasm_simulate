@@ -2,7 +2,7 @@
 # =============================================================================
 
 # Standard
-from typing import Tuple
+from typing import List, Tuple
 
 # Third-party
 import numpy as np
@@ -40,10 +40,14 @@ class AmplitudeGenerator:
         self.num_dim = num_dim
         self.seed = seed
 
+        # If the seed is None, create a random seed
+        if self.seed is None:
+            self.seed = np.random.randint(1000000)
+
         # assert dimension
         assert num_dim == 3 or num_dim == 6, "dimension should be 3 or 6"
 
-    def get_amplitude(self) -> pd.DataFrame:
+    def get_amplitude(self) -> List:
         """get amplitude curves
 
         Parameters
@@ -104,14 +108,15 @@ class AmplitudeGenerator:
                 ii, self.arg_name
             ].T.tolist()
 
-        return self.amplitude_to_abaqus
+        # Return the 0th index of the dataframe
+        return self.amplitude_to_abaqus.iloc[0]['amplitude']
 
     @staticmethod
     def generate_control_points(
         seed: int, num_control: int, num_steps: int, num_dim: int = 3
     ) -> Tuple[
-        np.ndarray[any, np.dtype[np.floating]],
-        np.ndarray[any, np.dtype[np.floating]],
+        np.ndarray,
+        np.ndarray,
     ]:
         """generate control points
 
