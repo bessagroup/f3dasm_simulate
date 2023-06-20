@@ -19,10 +19,10 @@ extend-exclude =
 count = True
 
 # Set the maximum length that any line may be
-max-line-length = 79
+max-line-length = 118
 
 # Set the maximum length that a comment or docstring line may be
-max-doc-length = 79
+max-doc-length = 118
 
 # Set the number of spaces used for indentation
 indent-size = 4
