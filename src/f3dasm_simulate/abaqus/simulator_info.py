@@ -26,12 +26,14 @@ __status__ = 'Stable'
 # =============================================================================
 
 
-class SimulatorInfo:
+class SimulationInfo:
     def __init__(self, material: Material,
                  microstructure: Microstructure, loading: Loading):
         self.material = material
         self.microstructure = microstructure
         self.loading = loading
+
+        # Location of the scripts
         self.sim_path = None
         self.sim_script = None
 
@@ -101,7 +103,7 @@ class FolderInfo:
         #         'post_script': self.post_script}
 
 
-def combine_info(abaqus_info: AbaqusInfo, simulation_info: SimulatorInfo, folder_info: FolderInfo) -> dict:
+def combine_info(abaqus_info: AbaqusInfo, simulation_info: SimulationInfo, folder_info: FolderInfo) -> dict:
     d = {}
     d.update(abaqus_info.to_dict())
     d.update(simulation_info.to_dict())

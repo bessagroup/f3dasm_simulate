@@ -11,7 +11,7 @@ import numpy as np
 from scipy.spatial import distance_matrix
 
 # local functions
-from .base import MicrosctuctureGenerator
+from .microstructure_generator import MicrostructureGenerator
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -23,7 +23,7 @@ __status__ = "Stable"
 # =============================================================================
 
 
-class SphereParticles(MicrosctuctureGenerator):
+class SphereParticles(MicrostructureGenerator):
     """Generate the 3D RVE with different size of sphere
 
     Parameters

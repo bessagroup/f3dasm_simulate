@@ -15,8 +15,9 @@ import time
 from f3dasm.simulation import Simulator
 
 # Local
-from .simulator_assertinputs import AssertInputs
-from .simulator_info import AbaqusInfo, FolderInfo, SimulatorInfo, combine_info
+from .simulator_assertinputs import is_inputs_proper_defined
+from .simulator_info import (AbaqusInfo, FolderInfo, SimulationInfo,
+                             combine_info)
 from .utils import create_dir, print_banner, write_json
 
 #                                                        Authorship and Credits
@@ -29,8 +30,8 @@ __status__ = 'Stable'
 # =============================================================================
 
 
-class AbaqusSimulator(Simulator, AssertInputs):
-    def __init__(self, simulation_info: SimulatorInfo, folder_info: FolderInfo, abaqus_info: AbaqusInfo):
+class AbaqusSimulator(Simulator):
+    def __init__(self, simulation_info: SimulationInfo, folder_info: FolderInfo, abaqus_info: AbaqusInfo):
         # TODO: sim_info is a combination of simulation_info and abaqus_info, hence making it redundant
         self.folder_info = folder_info
         self.abaqus_info = abaqus_info
@@ -43,7 +44,7 @@ class AbaqusSimulator(Simulator, AssertInputs):
         self.sim_info = combine_info(abaqus_info=abaqus_info,
                                      simulation_info=simulation_info, folder_info=folder_info)
 
-        self.is_inputs_proper_defined(
+        is_inputs_proper_defined(
             folder_info=folder_info.to_dict(), sim_info=self.sim_info
         )
 

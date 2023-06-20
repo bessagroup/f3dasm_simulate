@@ -1,6 +1,7 @@
 #                                                                       Modules
 # =============================================================================
 
+# Third-party
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,7 +15,7 @@ __status__ = "Stable"
 # =============================================================================
 
 
-class MicrosctuctureGenerator:
+class MicrostructureGenerator:
     "base class of mirostructure generator"
 
     def generate_microstructure(self, seed: any = None) -> float:
@@ -117,7 +118,7 @@ class MicrosctuctureGenerator:
             plt.show()
 
     @staticmethod
-    def cricle_plot(
+    def circle_plot(
         fibers: np.ndarray,
         length: float,
         width: float,

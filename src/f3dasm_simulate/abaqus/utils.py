@@ -8,6 +8,8 @@ Utility functions for f3dasm_simulate package.
 import json
 import os
 
+# from pathlib import Path
+
 #                                                          Authorship & Credits
 # =============================================================================
 __author__ = "Jiaxiang Yi (J.Yi@tudelft.nl)"
@@ -33,6 +35,12 @@ def create_dir(current_folder: str, dir_name: str) -> str:
     str
         path of created folder
     """
+
+    # path = Path(current_folder) / Path(dir_name)
+    # try:
+    #     path.mkdir(parents=True, exist_ok=True)
+    # except OSError:
+    #     print(f"Directory {dir_name} can not be created")
 
     path = os.path.join(current_folder, dir_name)
     try:

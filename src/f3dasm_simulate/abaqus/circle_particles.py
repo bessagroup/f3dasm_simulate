@@ -11,7 +11,7 @@ import numpy as np
 from scipy.spatial import distance_matrix
 
 # import local functions
-from .base import MicrosctuctureGenerator
+from .microstructure_generator import MicrostructureGenerator
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -23,12 +23,12 @@ __status__ = "Stable"
 # =============================================================================
 
 
-class CircleParticles(MicrosctuctureGenerator):
+class CircleParticles(MicrostructureGenerator):
     """2D RVE with different size of disks/circles
 
     Parameters
     ----------
-    MicrosctucturaGenerator : class
+    MicrostructureGenerator : class
         parent class of microstructure generater
     """
 
@@ -134,7 +134,7 @@ class CircleParticles(MicrosctuctureGenerator):
         fig_name: str = "microstructure.png",
         **kwargs,
     ) -> None:
-        self.cricle_plot(
+        self.circle_plot(
             fibers=self.fiber_positions,
             length=self.length,
             width=self.width,

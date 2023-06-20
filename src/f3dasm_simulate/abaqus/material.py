@@ -52,8 +52,6 @@ class CompositeMaterial(SimulatorPart):
 
         # Create the combined material dictionary
         # This doesnt work with two materials that have a hardening law
-
-        # Combine matrix_material and fiber_material
         return {**self.matrix_material.to_dict(),
                 **self.fiber_material.to_dict()}
 

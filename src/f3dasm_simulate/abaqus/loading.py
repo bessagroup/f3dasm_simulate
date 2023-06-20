@@ -42,8 +42,9 @@ class PathLoading(Loading):
         self.strain = strain
 
     def to_dict(self):
+        # Casting strain again to a list to avoid OmegaConf.ListCOnfig type with hydra
         return {'strain_amplitude': self.amplitude_generator.get_amplitude(),
-                'strain': self.strain}
+                'strain': list(self.strain)}
 
 
 class RegularLoading(Loading):
@@ -51,4 +52,4 @@ class RegularLoading(Loading):
         self.strain = strain
 
     def to_dict(self):
-        return {'strain': self.strain}
+        return {'strain': list(self.strain)}

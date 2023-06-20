@@ -1,13 +1,13 @@
 from .loading import Loading
 from .material import CompositeMaterial, Material, PlasticMaterial
 from .microstructure import Microstructure
-from .simulator_info import SimulatorInfo
+from .simulator_info import SimulationInfo
 
 
-class VonMisesPlasticElasticPathLoads(SimulatorInfo):
+class VonMisesPlasticElasticPathLoads(SimulationInfo):
     def __init__(self, material: Material,
                  microstructure: Microstructure, loading: Loading):
-        super().__init__(material, microstructure, loading)
+        super().__init__(material=material, microstructure=microstructure, loading=loading)
 
         # Reference to the python script that will be used to run the simulation
         self.sim_path = "benchmark_abaqus_scripts.two_materials_rve"
