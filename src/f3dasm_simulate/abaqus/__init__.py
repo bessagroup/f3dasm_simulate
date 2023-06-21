@@ -18,10 +18,12 @@ Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 
 # Third-party
 
-from . import loading, material, microstructure, simulator, simulator_info
+
 # Local
-from .cddm import VonMisesPlasticElasticPathLoads
 from ..example_module import add_one
+from . import (loading, material, microstructure, overwrite_inputs, simulator,
+               simulator_info)
+from .cddm import VonMisesPlasticElasticPathLoads
 
 #                                                        Authorship and Credits
 # =============================================================================
