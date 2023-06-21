@@ -38,6 +38,17 @@ class Loading(SimulatorPart):
 class PathLoading(Loading):
     def __init__(self, amplitude_generator: AmplitudeGenerator = AmplitudeGenerator(),
                  strain: List[float] = [0.02, 0.02, 0.02]):
+        """Class that contains the path loading of the rve. The loading is defined
+        by the amplitude generator and the strain.
+
+
+        Parameters
+        ----------
+        amplitude_generator, optional
+            Amplitude generator object, by default AmplitudeGenerator()
+        strain, optional
+            strain in the three directions, by default [0.02, 0.02, 0.02]
+        """
         self.amplitude_generator = amplitude_generator
         self.strain = strain
 
@@ -48,7 +59,16 @@ class PathLoading(Loading):
 
 
 class RegularLoading(Loading):
+
     def __init__(self, strain: List[float] = [0.02, 0.02, 0.02]):
+        """Class that contains the regular loading of the rve. The loading is defined
+        by the strain.
+
+        Parameters
+        ----------
+        Loading
+            strain in the three directions, by default [0.02, 0.02, 0.02]
+        """
         self.strain = strain
 
     def to_dict(self):

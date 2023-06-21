@@ -7,6 +7,20 @@ from .simulator_info import SimulationInfo
 class VonMisesPlasticElasticPathLoads(SimulationInfo):
     def __init__(self, material: Material,
                  microstructure: Microstructure, loading: Loading):
+        """Class that contains the information to run a simulation with
+        a composite material with two phases. The phases are assumed to be
+        elastic or plastic. The plastic phase is assumed to be a von Mises
+        material.
+
+        Parameters
+        ----------
+        material
+            material object
+        microstructure
+            microstructure object
+        loading
+            loading conditions
+        """        
         super().__init__(material=material, microstructure=microstructure, loading=loading)
 
         # Reference to the python script that will be used to run the simulation
