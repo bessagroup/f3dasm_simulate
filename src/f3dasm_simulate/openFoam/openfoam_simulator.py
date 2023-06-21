@@ -18,6 +18,7 @@ from PyFoam.Execution.BasicRunner import BasicRunner
 
 
 # Local
+from .simulator_info import SimulationInfo, FolderInfo, SimulatorInfo
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -45,10 +46,13 @@ class openFoamSimulator(Simulator):
 
     def __init__(
         self,
-        case_source_path: str or Path,
-        case_name: str = None,
-        output_data_path: str = "jobs",
-        job_id: str or int = 0,
+        simulation_info: SimulationInfo,
+        # folder_info: FolderInfo,
+        simulator_info: SimulatorInfo
+        # case_source_path: str or Path,
+        # case_name: str = None,
+        # output_data_path: str = "jobs",
+        # job_id: str or int = 0,
     ) -> None:
         """Constructor.
 
