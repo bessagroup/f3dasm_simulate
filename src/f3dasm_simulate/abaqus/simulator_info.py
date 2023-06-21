@@ -5,11 +5,9 @@ Example module
 #                                                                       Modules
 # =============================================================================
 
-import os
+
 # Standard
 from pathlib import Path
-
-import f3dasm_simulate
 
 # Local
 from .loading import Loading
@@ -80,7 +78,7 @@ class FolderInfo:
     def __init__(
             self,
             main_work_directory: str = str(Path().absolute() / Path("Data")),
-            script_path: str = "./scriptbase",  # TODO: check this
+            script_path: str = str(Path().absolute() / Path("scriptbase")),  # TODO: check this
             current_work_directory: str = 'case_0',
             post_path: str = "basic_analysis_scripts.post_process",
             post_script: str = "PostProcess2D"):
