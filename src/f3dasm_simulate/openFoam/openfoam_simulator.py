@@ -8,6 +8,7 @@ import time
 from pathlib import Path
 
 # Third-party
+from f3dasm.simulation import Simulator
 from PyFoam import FoamInformation
 from PyFoam.Basics.Utilities import execute
 from PyFoam.Execution.AnalyzedRunner import AnalyzedRunner
@@ -17,7 +18,6 @@ from PyFoam.Execution.BasicRunner import BasicRunner
 
 
 # Local
-from .simulator import Simulator
 
 #                                                          Authorship & Credits
 # =============================================================================
