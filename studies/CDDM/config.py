@@ -1,13 +1,11 @@
 from dataclasses import dataclass
+from typing import List, Union
 
-from f3dasm_simulate.abaqus.loading import Loading
-from f3dasm_simulate.abaqus.material import Material
-from f3dasm_simulate.abaqus.microstructure import Microstructure
 
 @dataclass
 class FileConfig:
-    main_work_directory: str
-    script_path: str
+    # main_work_directory: str
+    # script_path: str
     current_work_directory: str
     post_path: str
     post_script: str
@@ -25,10 +23,33 @@ class AbaqusConfig:
 
 
 @dataclass
+class DesignConfig:
+    input_space: List
+    output_space: List
+
+
+@dataclass
+class HPCConfig:
+    jobid: int
+    jobqueue_filename: str
+
+
+@dataclass
+class ExperimentConfig:
+    existing_data_path: Union[bool, str]
+    name: str
+    sampler: str
+    seed: int
+    number_of_samples: int
+
+
+@dataclass
 class Config:
     files: FileConfig
-    microstructure: Microstructure
-    material: Material
-    loading: Loading
+    microstructure: dict
+    material: dict
+    loading: dict
     abaqus: AbaqusConfig
-    design: dict
+    design: DesignConfig
+    hpc: HPCConfig
+    experimentdata: ExperimentConfig

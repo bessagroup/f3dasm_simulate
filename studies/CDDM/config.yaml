@@ -1,12 +1,11 @@
 design:
-  _target_: f3dasm.DesignSpace
   input_space:
     - _target_: f3dasm.ContinuousParameter
-      name: "vol_req"
+      name: vol_req
       lower_bound: 0.1
       upper_bound: 0.5
     - _target_: f3dasm.ContinuousParameter
-      name: "radius_mu"
+      name: radius_mu
       lower_bound: 0.001
       upper_bound: 0.005
   output_space:
@@ -61,8 +60,19 @@ abaqus:
   job_name: "job"
 
 files:
-  main_work_directory: None
-  script_path: None
+  # main_work_directory: None
+  # script_path: None
   current_work_directory: case_0
   post_path: basic_analysis_scripts.post_process
   post_script: PostProcess2D
+
+hpc:
+  jobid: -1
+  jobqueue_filename: "jobqueue"
+
+experimentdata:
+  existing_data_path: False
+  name: "cddm_abaqus"
+  sampler: RandomUniform
+  seed: 1
+  number_of_samples: 3
