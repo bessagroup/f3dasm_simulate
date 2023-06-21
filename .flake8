@@ -13,6 +13,7 @@ extend-exclude =
     tests/
     src/f3dasm_simulate/abaqus/scriptbase/
     notebooks/
+    studies/CDDM/outputs/
 
 # <<< UPDATE ACCORDING WITH YOUR PYTHON PROJECT
 
