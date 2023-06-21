@@ -58,9 +58,6 @@ def initial_script(config: Config):
     # Write the JobQueue object to a file
     job_queue.write_new_jobfile()
 
-    if config.hpc.jobid == -1:  # Pass if on local machine
-        return
-
 
 @hydra.main(config_path=".", config_name="config")
 def main(config: Config):

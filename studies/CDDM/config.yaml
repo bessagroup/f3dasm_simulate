@@ -30,9 +30,9 @@ material:
 microstructure:
   _target_: f3dasm_simulate.abaqus.microstructure.CircleMicrostructure
   size: 0.048
-  radius_mu: 0.003
+  radius_mu:
   radius_std: 0.0
-  vol_req: 0.3
+  vol_req:
   seed: 42
 
 loading:
@@ -60,8 +60,8 @@ abaqus:
   job_name: "job"
 
 files:
-  # main_work_directory: None
-  # script_path: None
+  main_work_directory: "."
+  script_path: /home/martin/Documents/GitHub/f3dasm_simulate/src/f3dasm_simulate/abaqus/scriptbase
   current_work_directory: case_0
   post_path: basic_analysis_scripts.post_process
   post_script: PostProcess2D

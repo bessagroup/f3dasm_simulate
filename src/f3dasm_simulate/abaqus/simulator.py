@@ -53,23 +53,30 @@ class AbaqusSimulator(Simulator):
             ) -> dict:
         """run the simulation"""
 
+        # save the current absolute path
+        home_path: str = os.getcwd()
+
         # TODO: change to pre_process, execute, post_process order
         os.chdir(main_folder)
 
-        self.pre_process()
+        self.pre_process(third_folder_name=self.folder_info.current_work_directory)
         self.execute()
         self.post_process()
         results = self.read_back_results()
+
+        # change back to the home path
+        os.chdir(home_path)
+
         return results
 
     def pre_process(self, folder_index: int = None,
                     sub_folder_index: int = None,
-                    third_folder_index: int = 0) -> None:
+                    third_folder_name: str = 'case_0') -> None:
         # number of samples
         self._create_working_folder(
             folder_index,
             sub_folder_index,
-            third_folder_index,
+            third_folder_name,
         )
 
     def execute(
@@ -315,7 +322,7 @@ class AbaqusSimulator(Simulator):
         self,
         folder_index: int = None,
         sub_folder_index: int = None,
-        third_folder_index: int = None,
+        third_folder_name: str = None,
     ) -> None:
         """create folders for excuting abaqus simulations
 
@@ -337,23 +344,22 @@ class AbaqusSimulator(Simulator):
         """
         if folder_index is None:
             if sub_folder_index is None:
-                self.folder_info.current_work_directory = "case_" + str(
-                    third_folder_index
-                )
+                self.folder_info.current_work_directory = third_folder_name
+
             else:
-                if third_folder_index is None:
+                if third_folder_name is None:
                     self.folder_info.current_work_directory = "point_" + str(sub_folder_index)
                 else:
                     self.folder_info.current_work_directory = (
                         "point_"
                         + str(sub_folder_index)
-                        + "/case_"
-                        + str(third_folder_index)
+                        + "/"
+                        + third_folder_name
                     )
         else:
             if sub_folder_index is None:
                 raise ValueError("provide sub_folder_index")
-            elif third_folder_index is None:
+            elif third_folder_name is None:
                 raise ValueError("provide third_folder_index")
             else:
                 self.folder_info.current_work_directory = (
@@ -361,8 +367,8 @@ class AbaqusSimulator(Simulator):
                     + str(folder_index)
                     + "/point_"
                     + str(sub_folder_index)
-                    + "/case_"
-                    + str(third_folder_index)
+                    + "/"
+                    + third_folder_name
                 )
         new_path = create_dir(
             current_folder=self.folder_info.main_work_directory,

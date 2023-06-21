@@ -1,5 +1,5 @@
 import logging
-import os
+from pathlib import Path
 
 from config import Config
 from hydra.utils import instantiate
@@ -50,8 +50,9 @@ def execute(config: Config, jobnumber: int, designparameters: dict):
         simulation_info=simulation_info, folder_info=folder_info, abaqus_info=abaqus_info)
 
     # Run the simulator
-    simulator.run(main_folder=os.path.dirname(f3dasm_simulate.__file__))
+    simulator.run(main_folder=str(Path()))
 
     logging.info(f"case_{jobnumber} finished")
 
+    # Return the working directory name
     return folder_info.current_work_directory

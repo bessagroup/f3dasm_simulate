@@ -4,8 +4,8 @@ from typing import List, Union
 
 @dataclass
 class FileConfig:
-    # main_work_directory: str
-    # script_path: str
+    main_work_directory: str
+    script_path: str
     current_work_directory: str
     post_path: str
     post_script: str
