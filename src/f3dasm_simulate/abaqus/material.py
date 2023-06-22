@@ -68,12 +68,15 @@ class CompositeMaterial(SimulatorPart):
 
 
 class HardeningLaw(ABC):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, a: float = 0.2, b: float = 0.4, yield_stress: float = 0.5):
         """Abstract class for the hardening law. The hardening law is defined
         by the hardening law table. The hardening law table is a 2D array
         with the first row being the strain and the second row being the
         stress.
         """
+        self.a = a
+        self.b = b
+        self.yield_stress = yield_stress
         self._calculate_hardening_table()
 
     @property
@@ -104,24 +107,6 @@ class HardeningLaw(ABC):
 
 
 class LinearHardeningLaw(HardeningLaw):
-    def __init__(self, a: float = 0.5, yield_stress: float = 0.5):
-        """Linear hardening law. The hardening law is defined by the
-        hardening law table. The hardening law table is a 2D array
-        with the first row being the strain and the second row being the
-        stress.
-
-        Parameters
-        ----------
-        a, optional
-            parameter for the linear hardening, by default 0.5
-        yield_stress, optional
-            yield_stress, by default 0.5
-        """
-        self.a = a
-        self.yield_stress = yield_stress
-
-        super().__init__()
-
     def _calculate_hardening_table(self) -> List[float]:
         # get the arguements
         yield_stress = self.yield_stress
@@ -144,27 +129,6 @@ class LinearHardeningLaw(HardeningLaw):
 
 
 class SwiftHardeningLaw(HardeningLaw):
-    def __init__(self, a: float = 0.2, b: float = 0.4, yield_stress: float = 0.5):
-        """Swift hardening law. The hardening law is defined by the
-        hardening law table. The hardening law table is a 2D array
-        with the first row being the strain and the second row being the
-        stress.
-
-        Parameters
-        ----------
-        a, optional
-            parameter for swift hardening law, by default 0.2
-        b, optional
-            parameter for swift hardening law, by default 0.4
-        yield_stress, optional
-            yield_stress, by default 0.5
-        """
-        self.a = a
-        self.b = b
-        self.yield_stress = yield_stress
-
-        super().__init__()
-
     def _calculate_hardening_table(self) -> List[float]:
         # get the arguements
         yield_stress = self.yield_stress
@@ -186,27 +150,6 @@ class SwiftHardeningLaw(HardeningLaw):
 
 
 class RambergHardeningLaw(HardeningLaw):
-    def __init__(self, a: float = 0.2, b: float = 0.4, yield_stress: float = 0.5):
-        """Ramber hardening law. The hardening law is defined by the
-        hardening law table. The hardening law table is a 2D array
-        with the first row being the strain and the second row being the
-        stress.
-
-        Parameters
-        ----------
-        a, optional
-            parameter, by default 0.2
-        b, optional
-            parameter, by default 0.4
-        yield_stress, optional
-            yield_stress, by default 0.5
-        """
-        self.a = a
-        self.b = b
-        self.yield_stress = yield_stress
-
-        super().__init__()
-
     def _calculate_hardening_table(self) -> List[float]:
         # get the arguements
         yield_stress = self.yield_stress
