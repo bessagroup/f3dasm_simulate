@@ -1,6 +1,6 @@
-from .simulator_part import SimulatorPart
+from .simulator_part import ParametrizedPart
 
 
-class Mesh(SimulatorPart):
-    def __init__(self) -> None:
-        pass
+class Mesh(ParametrizedPart):
+    def __init__(self, parameters=None) -> None:
+        super().__init__(parameters=parameters)

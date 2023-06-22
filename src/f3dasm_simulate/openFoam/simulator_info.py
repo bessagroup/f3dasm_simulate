@@ -40,6 +40,7 @@ class SimulationInfo(SimulatorPart):
         case_source_path: Path,
         name: str = None,
         output_data_path: Path = Path("jobs"),
+        job_id: str or int = 0,
     ):
         self.case_source_path = case_source_path.resolve()
         self.output_data_path = output_data_path.resolve()
@@ -49,6 +50,13 @@ class SimulationInfo(SimulatorPart):
         self.boundary = boundary
         self.mesh = mesh
         self.solver = solver
+
+        if not name:
+            self.name = self.case_source_path.stem
+        else:
+            self.name = name
+
+        self.job_id = job_id
 
         # self._run_checks()
 

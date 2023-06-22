@@ -18,7 +18,7 @@ from PyFoam.Execution.BasicRunner import BasicRunner
 
 
 # Local
-from .simulator_info import SimulationInfo, FolderInfo, SimulatorInfo
+from .simulator_info import SimulationInfo, SimulatorInfo
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -62,17 +62,8 @@ class openFoamSimulator(Simulator):
             Path to the template case directory.
 
         """
-        self.case_source_path = Path(case_source_path).resolve()
-
-        if not case_name:
-            self.case_name = self.case_source_path.stem
-        else:
-            self.case_name = case_name
-
-        self.output_data_path = Path(output_data_path).resolve()
-        self.output_data_path.mkdir(parents=True, exist_ok=True)
-
-        self.job_id = job_id
+        self.simulation_info = simulation_info
+        self.simulator_info = simulator_info
 
     def pre_process(self, overwrite=True) -> None:
         """Handle the preprocessing thanks to pyfoam:
@@ -88,13 +79,16 @@ class openFoamSimulator(Simulator):
         """
 
         source = SolutionDirectory(
-            name=self.case_source_path.as_posix(),
+            name=self.simulation_info.case_source_path.as_posix(),
             paraviewLink=False,
             addLocalConfig=True,
             parallel=False,
         )
 
-        solution_dir = self.output_data_path / f"{self.case_name}_{self.job_id}"
+        solution_dir = (
+            self.simulation_info.output_data_path
+            / f"{self.simulation_info.name}_{self.simulation_info.job_id}"
+        )
 
         self.solution_dir = source.cloneCase(name=solution_dir.as_posix())
 
@@ -139,7 +133,10 @@ class openFoamSimulator(Simulator):
             "streamFunction",
         ]
         runner = BasicRunner(
-            argv=argv, silent=True, jobId=self.job_id, logname="postProcess"
+            argv=argv,
+            silent=True,
+            jobId=self.simulation_info.job_id,
+            logname="postProcess",
         )
 
         runner.start()
@@ -167,7 +164,10 @@ class openFoamSimulator(Simulator):
             argv = ["blockMesh", "-case", self.solution_dir.name]
 
             block_mesh_runner = BasicRunner(
-                argv=argv, silent=True, jobId=self.job_id, logname="blockMesh"
+                argv=argv,
+                silent=True,
+                jobId=self.simulation_info.job_id,
+                logname="blockMesh",
             )
 
             block_mesh_runner.start()

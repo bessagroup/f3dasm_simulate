@@ -49,3 +49,15 @@ class SimulatorPart(Protocol):
                 sim_info[k] = v
 
         return sim_info
+
+
+class ParametrizedPart(SimulatorPart):
+    def __init__(self, parameters=None) -> None:
+        if parameters:
+            for k, v in parameters.items():
+                try:
+                    setattr(
+                        self, k, {"value": v["value"], "description": v["description"]}
+                    )
+                except KeyError as e:
+                    print("A parameter should contain a description and a value.")
