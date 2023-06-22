@@ -155,7 +155,7 @@ class AbaqusSimulator(Simulator):
         with open(file_name, "rb") as fd:
             results = pickle.load(fd, fix_imports=True, encoding="latin1")
 
-        os.chdir(self.folder_info.main_work_directory)
+        # os.chdir(self.folder_info.main_work_directory)
 
         return results
 

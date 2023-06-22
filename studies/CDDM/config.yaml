@@ -93,7 +93,7 @@ abaqus:
 
 files:
   main_work_directory: "."
-  script_path: /home/martin/Documents/GitHub/f3dasm_simulate/src/f3dasm_simulate/abaqus/scriptbase
+  script_path: /home/jiaxiangyi/Documents/rvesimulator/src/rvesimulator/scriptbase
   current_work_directory: case_0
   post_path: basic_analysis_scripts.post_process
   post_script: PostProcess2D
