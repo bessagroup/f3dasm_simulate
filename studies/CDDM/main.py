@@ -9,8 +9,11 @@ from typing import Callable
 # Third-party
 import f3dasm
 import hydra
+import numpy as np
+import pandas as pd
 from abaqus_cddm import execute
 from config import Config
+from f3dasm._logging import logger
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 
@@ -41,12 +44,39 @@ def initial_script(config: Config):
         output_space = [instantiate(i) for i in config.design.output_space]
         design = f3dasm.DesignSpace(input_space, output_space)
 
-        # Create the sampler from the hydra yaml file
-        sampler_name = f3dasm.sampling.find_sampler(config.experimentdata.sampler)
-        sampler: f3dasm.Sampler = sampler_name(design=design, seed=config.experimentdata.seed)
+        # Create the four tasks
+        task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'poisson_ratio': 10,
+                  '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
+                  'b': 0.5, 'yield_stress': 0.5}
+        task_b = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'poisson_ratio': 1,
+                  '_target_': 'f3dasm_simulate.abaqus.material.SwiftHardeningLaw', 'a': 0.5,
+                  'b': 0.4, 'yield_stress': 0.5}
+        task_c = {'vol_req': 0.15, 'radius_mu': 0.0015, 'radius_std': 0.00005, 'poisson_ratio': 1000,
+                  '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
+                  'b': 0.4, 'yield_stress': 0.5}
+        task_d = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'poisson_ratio': 1,
+                  '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
+                  'b': 0.4, 'yield_stress': 3.0}
 
-        # Create samples and ExperimentData object
-        data = sampler.get_samples(numsamples=config.experimentdata.number_of_samples)
+        # creata a list of tasks where each task is a dictionary of task_a plus a seed number
+        seed = range(config.experimentdata.number_of_samples)
+        tasks_a = [{'seed': s, **task_a} for s in seed]
+        tasks_b = [{'seed': s, **task_b} for s in seed]
+        tasks_c = [{'seed': s, **task_c} for s in seed]
+        tasks_d = [{'seed': s, **task_d} for s in seed]
+
+        # combine the lists
+        tasks = tasks_a + tasks_b + tasks_c + tasks_d
+        tasks_numpy = pd.DataFrame(tasks).to_numpy()
+
+        # Create empty data object
+        data = f3dasm.ExperimentData(design)
+
+        # create a 2D numpy array with length of tasks_numpy and values an empty str for output 'status'
+        output_array = np.empty((len(tasks_numpy), 1), dtype=object)
+
+        # Fill the data object
+        data.add_numpy_arrays(input=tasks_numpy, output=output_array)
 
         # Create the JobQueue object
         job_queue = f3dasm.experiment.JobQueue.from_experimentdata(
@@ -100,12 +130,12 @@ def job(config: Config, execute_callable: Callable):
         try:
             jobnumber = job_queue.get()
         except f3dasm.experiment.NoOpenJobsError:
-            logging.info("There are no open jobs left!")
+            logger.info("There are no open jobs left!")
             break
 
         data = f3dasm.ExperimentData.from_csv(filename=config.experimentdata.name)
         designparameters = data.get_inputdata_by_index(jobnumber)
-
+        logger.info(f"Executing job {jobnumber} with parameters {designparameters}")
         try:
             returnvalue = execute_callable(config, jobnumber, designparameters)
             job_queue.mark_finished(jobnumber)
