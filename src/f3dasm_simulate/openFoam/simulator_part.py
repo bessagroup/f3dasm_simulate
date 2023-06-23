@@ -50,14 +50,26 @@ class SimulatorPart(Protocol):
 
         return sim_info
 
+    def get_structured_parameters(self) -> dict:
+        struct_parameters = {}
+        for k, v in self.__dict__.items():
+            if isinstance(v, ParametrizedPart):
+                struct_parameters[k] = dict(description=v.description, values=v.values)
+
+        return struct_parameters
+
 
 class ParametrizedPart(SimulatorPart):
-    def __init__(self, parameters=None) -> None:
+    def __init__(self, description="parameters", parameters=None) -> None:
+        self.description = description
+        self.values = {}
         if parameters:
             for k, v in parameters.items():
                 try:
-                    setattr(
-                        self, k, {"value": v["value"], "description": v["description"]}
-                    )
+                    self.values[k] = {
+                        "default": v["value"],
+                        "description": v["description"],
+                    }
+
                 except KeyError as e:
                     print("A parameter should contain a description and a value.")

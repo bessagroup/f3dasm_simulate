@@ -15,10 +15,12 @@ from PyFoam.Execution.AnalyzedRunner import AnalyzedRunner
 from PyFoam.LogAnalysis.BoundingLogAnalyzer import BoundingLogAnalyzer
 from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 from PyFoam.Execution.BasicRunner import BasicRunner
+from PyFoam.Applications.PrepareCase import PrepareCase
 
 
 # Local
 from .simulator_info import SimulationInfo, SimulatorInfo
+from .modified_solution_directory import ModifiedSolutionDirectory
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -78,7 +80,7 @@ class openFoamSimulator(Simulator):
             If true, overwrite existing files at destination when cloning.
         """
 
-        source = SolutionDirectory(
+        source = ModifiedSolutionDirectory(
             name=self.simulation_info.case_source_path.as_posix(),
             paraviewLink=False,
             addLocalConfig=True,
@@ -91,6 +93,20 @@ class openFoamSimulator(Simulator):
         )
 
         self.solution_dir = source.cloneCase(name=solution_dir.as_posix())
+
+        # Create parameter files
+        self.solution_dir.writeDictionaryContents(
+            directory=".",
+            name="default.parameters",
+            contents=self.simulation_info.get_structured_parameters(),
+        )
+
+        args = [
+            "--no-mesh-create",
+            self.solution_dir.name,
+        ]
+
+        PrepareCase(args=args)
 
         self.pre_mesh()
 

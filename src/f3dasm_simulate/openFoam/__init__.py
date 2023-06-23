@@ -6,4 +6,5 @@ from . import (
     solver,
     openfoam_simulator,
     simulator_info,
+    simulator_part,
 )
