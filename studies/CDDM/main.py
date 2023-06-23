@@ -15,7 +15,6 @@ from abaqus_cddm import execute
 from config import Config
 from f3dasm._logging import logger
 from hydra.core.config_store import ConfigStore
-from hydra.utils import instantiate
 
 #                                                          Authorship & Credits
 # =============================================================================
@@ -38,11 +37,7 @@ def initial_script(config: Config):
     # Else, create the dataset
     else:
         # Create the DesignSpace
-        # List comprehension with instantiate
-        # Workaround: (https://github.com/facebookresearch/hydra/issues/1950)
-        input_space = [instantiate(i) for i in config.design.input_space]
-        output_space = [instantiate(i) for i in config.design.output_space]
-        design = f3dasm.DesignSpace(input_space, output_space)
+        design = f3dasm.DesignSpace.from_yaml(config.design)
 
         # Create the four tasks
         task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'poisson_ratio': 10,

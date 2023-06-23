@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Union
+from typing import Dict, Union
 
 
 @dataclass
@@ -24,8 +24,8 @@ class AbaqusConfig:
 
 @dataclass
 class DesignConfig:
-    input_space: List
-    output_space: List
+    input_space: Dict
+    output_space: Dict
 
 
 @dataclass
