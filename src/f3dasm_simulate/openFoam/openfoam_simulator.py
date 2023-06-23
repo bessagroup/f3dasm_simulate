@@ -1,13 +1,9 @@
 #                                                                       Modules
 # =============================================================================
 # Standard
-import os
-import pickle
 import subprocess
-import time
 from pathlib import Path
-import psutil
-
+import logging
 
 # Third-party
 from f3dasm.simulation import Simulator
@@ -15,9 +11,7 @@ from PyFoam import FoamInformation
 from PyFoam.Basics.Utilities import execute
 from PyFoam.Execution.AnalyzedRunner import AnalyzedRunner
 from PyFoam.LogAnalysis.BoundingLogAnalyzer import BoundingLogAnalyzer
-from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 from PyFoam.Execution.BasicRunner import BasicRunner
-from PyFoam.Applications.PrepareCase import PrepareCase
 
 
 # Local
@@ -49,14 +43,7 @@ class openFoamSimulator(Simulator):
     foam_tutorial_path = Path(FoamInformation.foamTutorials())
 
     def __init__(
-        self,
-        simulation_info: SimulationInfo,
-        # folder_info: FolderInfo,
-        simulator_info: SimulatorInfo
-        # case_source_path: str or Path,
-        # case_name: str = None,
-        # output_data_path: str = "jobs",
-        # job_id: str or int = 0,
+        self, simulation_info: SimulationInfo, simulator_info: SimulatorInfo
     ) -> None:
         """Constructor.
 
@@ -70,7 +57,7 @@ class openFoamSimulator(Simulator):
         self.simulator_info = simulator_info
 
     def pre_process(self, overwrite=True) -> None:
-        """Handle the preprocessing thanks to pyfoam:
+        """Handle the preprocessing thanks to FyFoam:
         1. Clone the case files (CloneCase utility)
         2. Prepare the case (PrepareCase utility)
 
@@ -82,6 +69,7 @@ class openFoamSimulator(Simulator):
             If true, overwrite existing files at destination when cloning.
         """
 
+        # Prepare the files
         source = ModifiedSolutionDirectory(
             name=self.simulation_info.case_source_path.as_posix(),
             paraviewLink=False,
@@ -89,125 +77,243 @@ class openFoamSimulator(Simulator):
             parallel=False,
         )
 
-        solution_dir = (
-            self.simulation_info.output_data_path
-            / f"{self.simulation_info.name}_{self.simulation_info.job_id}"
-        )
+        job_name = f"{self.simulation_info.name}_{self.simulation_info.job_id}"
 
-        self.solution_dir = source.cloneCase(name=solution_dir.as_posix())
+        self.job_path = self.simulation_info.output_data_path / job_name
 
-        # Create parameter files
-        self.solution_dir.writeDictionaryContents(
-            directory=".",
-            name="default.parameters",
-            contents=self.simulation_info.get_structured_parameters(),
-        )
+        logging.info(f"Starting job {job_name} at {self.job_path}")
 
-        args = [
-            "--no-mesh-create",
-            self.solution_dir.name,
-        ]
+        self.solution_dir = source.cloneCase(name=self.job_path.as_posix())
 
-        # For some reason, when used as a class, PrepareCase fails to initialize the
-        # 0 directory. Thus, run as a shell command as for Abaqus simulator
-        command = " ".join(["pyFoamPrepareCase.py"] + args)
+        if not self.simulator_info.preprocessors:
+            logging.info(
+                "The simulator pipeline does not contain preprocessors components."
+            )
 
-        proc = subprocess.Popen(command, shell=True)
+        for preprocessor in self.simulator_info.preprocessors:
+            # Run additional pre functions provided by users, pass otherwise
+            try:
+                preprocessor["pre_func"](self)
+            except KeyError:
+                pass
 
-        proc.wait()
+            try:
+                if (
+                    preprocessor["preprocessor"] == ""
+                    or not preprocessor["preprocessor"]
+                ):
+                    error_msg = "No preprocessor specified."
+                    logging.exception(error_msg)
+                    raise ValueError(error_msg)
 
-        self.pre_mesh()
+                if not preprocessor["options"]:
+                    preprocessor["options"] = []
 
-        self.mesh()
+            except KeyError as e:
+                error_msg = "A preprocessor is specified as a dict containing preprocessor and options keys."
+                logging.exception(error_msg)
+                raise ValueError(error_msg) from e
 
-        self.post_mesh()
+            if preprocessor["preprocessor"] == "prepareCase":
+                # Create parameter files
+                self.solution_dir.writeDictionaryContents(
+                    directory=".",
+                    name="default.parameters",
+                    contents=self.simulation_info.get_structured_parameters(),
+                )
 
-    def execute(self, solver="auto", solver_options=[]) -> None:
+                args = preprocessor["options"] + [self.job_path.as_posix()]
+
+                # When used as a class, PrepareCase fails to initialize the 0 directory (bug?)
+                # Thus, run as a shell command as for Abaqus simulator
+                command = " ".join(["pyFoamPrepareCase.py"] + args)
+
+                with open(self.job_path / "prepareCase.logfile", "w") as logfile:
+                    proc = subprocess.Popen(
+                        command,
+                        shell=True,
+                        stdout=logfile,
+                    )
+
+                # wait for the process to be executed
+                proc.wait()
+
+            else:
+                argv = [
+                    preprocessor["preprocessor"],
+                    "-case",
+                    self.job_path.as_posix(),
+                ] + preprocessor["options"]
+
+                preprocessor_runner = BasicRunner(
+                    argv=argv,
+                    silent=True,
+                    logname=preprocessor["preprocessor"],
+                    jobId=self.simulation_info.job_id,
+                )
+
+                preprocessor_runner.start()
+
+                if not preprocessor_runner.runOK():
+                    logfile = (
+                        self.job_path / f"{preprocessor['preprocessor']}.logfile"
+                    ).as_posix()
+                    error_msg = f"{preprocessor['preprocessor']} preprocessor failed. Check the logs: {logfile}"
+                    logging.exception(error_msg)
+                    raise Exception(error_msg)
+
+                # Run additional post functions provided by users, pass otherwise
+                try:
+                    preprocessor["post_func"](self)
+                except KeyError:
+                    pass
+
+    def execute(self) -> None:
         """Run"""
 
-        # logic adapted from PyFoamApplication utility
-        if solver == "auto":
+        if not self.simulator_info.solvers:
+            logging.info("The simulator pipeline does not contain solver components.")
+
+        for solver in self.simulator_info.solvers:
+            # Run additional pre functions provided by users, pass otherwise
             try:
-                solver = self.solution_dir.getDictionaryContents(
-                    "system", "controlDict"
-                )["application"]
+                solver["pre_func"](self)
             except KeyError:
-                print("No application specified in controDict.")
+                pass
 
-        # pyfoam is designed as a command line utility, hence options and args
-        # should be formated as such
-        argv = [solver, "-case", self.solution_dir.name] + solver_options
+            try:
+                if solver["solver"] == "" or not solver["solver"]:
+                    logging.info(
+                        "No openFoam solver specified. Switching to 'auto' mode."
+                    )
+                    solver["solver"] = "auto"
 
-        runner = AnalyzedRunner(
-            analyzer=BoundingLogAnalyzer(doFiles=True, singleFile=True),
-            argv=argv,
-            silent=True,
-            logname=solver,
-        )
-        runner.start()
+                if not solver["options"]:
+                    solver["options"] = []
+
+            except KeyError as e:
+                error_msg = "A solver is specified as a dict containing solver and options keys."
+                logging.exception(error_msg)
+                raise ValueError(error_msg) from e
+
+            # logic adapted from PyFoamApplication utility
+            # if solver is not auto it means it was specified
+            # solvers available with an openFoam setup are variable
+            # if a given solver is not available the runner will fail and the infomation
+            # will be made available through openFoam logs
+            if solver["solver"] == "auto":
+                try:
+                    solver["solver"] = self.solution_dir.getDictionaryContents(
+                        "system", "controlDict"
+                    )["application"]
+                    if solver["solver"]:
+                        logging.info(
+                            f"Automatic mode will use {solver['solver']} solver."
+                        )
+                    else:
+                        raise ValueError("Solver cannot be None.")
+
+                except (KeyError, ValueError) as e:
+                    error_msg = f"Automatic mode failed: no application specified in \
+                          {(self.job_path /'system'/'controlDict').as_posix()}"
+                    logging.exception(error_msg)
+                    raise ValueError(error_msg) from e
+
+            # pyfoam is designed as a command line utility, hence options and args
+            # should be formated as such
+            argv = [solver["solver"], "-case", self.job_path.as_posix()] + solver[
+                "options"
+            ]
+
+            if self.simulator_info.running_mode == "analyze":
+                solver_runner = AnalyzedRunner(
+                    analyzer=BoundingLogAnalyzer(doFiles=True, singleFile=True),
+                    argv=argv,
+                    silent=True,
+                    logname=solver["solver"],
+                    jobId=self.simulation_info.job_id,
+                )
+            elif self.simulator_info.running_mode == "basic":
+                solver_runner = BasicRunner(
+                    argv=argv,
+                    silent=True,
+                    logname=solver["solver"],
+                    jobId=self.simulation_info.job_id,
+                )
+
+            else:
+                error_msg = f"Running mode can be analyze or basic,\
+                      not {self.simulator_info.running_mode}."
+                logging.exception(error_msg)
+                raise ValueError(error_msg)
+
+            solver_runner.start()
+
+            if not solver_runner.runOK():
+                error_msg = f"{solver['solver']} solver failed. Check the logs: {(self.job_path /({solver['solver']}+ '.logfile')).as_posix()}"
+                logging.exception(error_msg)
+                raise Exception(error_msg)
+
+            # Run additional post functions provided by users, pass otherwise
+            try:
+                solver["post_func"](self)
+            except KeyError:
+                pass
 
     def post_process(self) -> None:
         """Function that handles the post-processing"""
-        ...
-        argv = [
-            "postProcess",
-            "-case",
-            self.solution_dir.name,
-            "-func",
-            "streamFunction",
-        ]
-        runner = BasicRunner(
-            argv=argv,
-            silent=True,
-            jobId=self.simulation_info.job_id,
-            logname="postProcess",
-        )
 
-        runner.start()
-
-        error_field = self.solution_dir.getDictionaryContents(
-            directory="0", name="error"
-        )["internalField"].val
-
-        self.results = dict(avg_error=sum(error_field) / len(error_field))
-
-    def run(self) -> None:
-        # better to call individual fucntion, kept for retro-compability
-        self.pre_process()
-        self.execute()
-        self.post_process()
-
-    def pre_mesh(self) -> None:
-        # # logic adapted from ClearCase utility
-        # allclean_path = Path(self.solution_dir.name).resolve() / "Allclean"
-
-        # if allclean_path.is_file():
-        #     print("Executing", allclean_path)
-        #     execute(allclean_path.as_posix(), workdir=self.solution_dir.name)
-
-        # self.solution_dir.clear(verbose=True)
-        pass
-
-    def mesh(self) -> None:
-        if self.solution_dir.blockMesh() != "":
-            # pyfoam is designed as a command line utility, hence options and args
-            # should be formated as such
-            argv = ["blockMesh", "-case", self.solution_dir.name]
-
-            block_mesh_runner = BasicRunner(
-                argv=argv,
-                silent=True,
-                jobId=self.simulation_info.job_id,
-                logname="blockMesh",
+        if not self.simulator_info.postprocessors:
+            logging.info(
+                "The simulator pipeline does not contain postprocessor components."
             )
 
-            block_mesh_runner.start()
+        for postprocessor in self.simulator_info.postprocessors:
+            # Run additional pre functions provided by users, pass otherwise
+            try:
+                postprocessor["pre_func"](self)
+            except KeyError:
+                pass
 
-            if not block_mesh_runner.runOK():
-                self.error("Problem with blockMesh")
+            try:
+                if (
+                    postprocessor["postprocessor"] == ""
+                    or not postprocessor["postprocessor"]
+                ):
+                    error_msg = "No postprocessor specified."
+                    logging.exception(error_msg)
+                    raise ValueError(error_msg)
 
-        else:
-            self.error("Problem with blockMesh")
+                if not postprocessor["options"]:
+                    postprocessor["options"] = []
 
-    def post_mesh(self) -> None:
-        pass
+            except KeyError as e:
+                error_msg = "A postprocessor is specified as a dict containing postprocessor and options keys."
+                logging.exception(error_msg)
+                raise ValueError(error_msg) from e
+
+            argv = [
+                postprocessor["postprocessor"],
+                "-case",
+                self.job_path.as_posix(),
+            ] + postprocessor["options"]
+
+            postprocessor_runner = BasicRunner(
+                argv=argv,
+                silent=True,
+                logname=postprocessor["postprocessor"],
+                jobId=self.simulation_info.job_id,
+            )
+
+            postprocessor_runner.start()
+
+            if not postprocessor_runner.runOK():
+                error_msg = f"{postprocessor['postprocessor']} postprocessor failed. Check the logs: {(self.job_path  /({postprocessor['postprocessor']}+ '.logfile')).as_posix()}"
+                logging.exception(error_msg)
+                raise Exception(error_msg)
+
+            # Run additional post functions provided by users, pass otherwise
+            try:
+                postprocessor["post_func"](self)
+            except KeyError:
+                pass

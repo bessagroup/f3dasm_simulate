@@ -44,7 +44,7 @@ class SimulationInfo(SimulatorPart):
     ):
         self.case_source_path = case_source_path.resolve()
         self.output_data_path = output_data_path.resolve()
-        self.output_data_path.mkdir(parents=True, exist_ok=True)
+
         self.material = material
         self.geometry = geometry
         self.boundary = boundary
@@ -58,31 +58,42 @@ class SimulationInfo(SimulatorPart):
 
         self.job_id = job_id
 
-        # self._run_checks()
+        self._prepare_filesytem()
 
-    # def _run_checks(self):
-    #     pass
+    def _prepare_filesytem(self):
+        self.output_data_path.mkdir(parents=True, exist_ok=True)
 
 
 class SimulatorInfo(SimulatorPart):
-    def __init__(self, fork: str, version: str, build_date: str):
-        self.name = "opemFoam"
+    def __init__(
+        self,
+        fork: str,
+        version: str,
+        build_date: str,
+        preprocessors: list or None = None,
+        solvers: list or None = None,
+        postprocessors: list or None = None,
+        running_mode: str = "analyze",
+        name: str = "openFoam",
+    ):
+        self.name = name
         self.fork = fork
         self.version = version
         self.build_date = build_date
 
-    def to_dict(self) -> dict:
-        return self.__dict__
+        if preprocessors:
+            self.preprocessors = preprocessors
+        else:
+            self.preprocessors = list()
 
+        if solvers:
+            self.solvers = solvers
+        else:
+            self.solvers = list()
 
-# class FolderInfo:
+        if solvers:
+            self.postprocessors = postprocessors
+        else:
+            self.postprocessors = list()
 
-
-# def combine_info(
-#     abaqus_info: AbaqusInfo, simulation_info: SimulationInfo, folder_info: FolderInfo
-# ) -> dict:
-#     d = {}
-#     d.update(abaqus_info.to_dict())
-#     d.update(simulation_info.to_dict())
-#     d.update(folder_info.to_dict())
-#     return d
+        self.running_mode = running_mode
