@@ -6,6 +6,8 @@ import pickle
 import subprocess
 import time
 from pathlib import Path
+import psutil
+
 
 # Third-party
 from f3dasm.simulation import Simulator
@@ -106,7 +108,13 @@ class openFoamSimulator(Simulator):
             self.solution_dir.name,
         ]
 
-        PrepareCase(args=args)
+        # For some reason, when used as a class, PrepareCase fails to initialize the
+        # 0 directory. Thus, run as a shell command as for Abaqus simulator
+        command = " ".join(["pyFoamPrepareCase.py"] + args)
+
+        proc = subprocess.Popen(command, shell=True)
+
+        proc.wait()
 
         self.pre_mesh()
 
@@ -157,6 +165,12 @@ class openFoamSimulator(Simulator):
 
         runner.start()
 
+        error_field = self.solution_dir.getDictionaryContents(
+            directory="0", name="error"
+        )["internalField"].val
+
+        self.results = dict(avg_error=sum(error_field) / len(error_field))
+
     def run(self) -> None:
         # better to call individual fucntion, kept for retro-compability
         self.pre_process()
@@ -164,14 +178,15 @@ class openFoamSimulator(Simulator):
         self.post_process()
 
     def pre_mesh(self) -> None:
-        # logic adapted from ClearCase utility
-        allclean_path = Path(self.solution_dir.name).resolve() / "Allclean"
+        # # logic adapted from ClearCase utility
+        # allclean_path = Path(self.solution_dir.name).resolve() / "Allclean"
 
-        if allclean_path.is_file():
-            print("Executing", allclean_path)
-            execute(allclean_path.as_posix(), workdir=self.solution_dir.name)
+        # if allclean_path.is_file():
+        #     print("Executing", allclean_path)
+        #     execute(allclean_path.as_posix(), workdir=self.solution_dir.name)
 
-        self.solution_dir.clear(verbose=True)
+        # self.solution_dir.clear(verbose=True)
+        pass
 
     def mesh(self) -> None:
         if self.solution_dir.blockMesh() != "":
