@@ -5,11 +5,16 @@ from os import path
 
 class ModifiedSolutionDirectory(SolutionDirectory):
     def writeDictionaryContents(self, directory, name, contents):
-        """Writes the contents of a dictionary
-        :param directory: Sub-directory of the case
-        :param name: name of the dictionary file
-        :param contents: Python-dictionary with the dictionary contents"""
+        """
+        Extend the pyFoam class to write the dictionary file without header which
+        can cause issues when parsing the parameter file.
 
+        Parameters
+        ----------
+        directory : Sub-directory of the case
+        name : name of the dictionary file
+        contents : Python-dictionary with the dictionary contents
+        """
         theDir = self.name
         if directory:
             theDir = path.join(theDir, directory)
