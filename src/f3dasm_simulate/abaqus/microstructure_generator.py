@@ -1,6 +1,8 @@
 #                                                                       Modules
 # =============================================================================
 
+from typing import Any
+
 # Third-party
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,7 +20,7 @@ __status__ = "Stable"
 class MicrostructureGenerator:
     "base class of mirostructure generator"
 
-    def generate_microstructure(self, seed: any = None) -> float:
+    def generate_microstructure(self, seed: Any = None) -> float:
         """generating micro-structure
 
         Parameters
@@ -27,7 +29,7 @@ class MicrostructureGenerator:
             seed generator or number , by default None
         """
 
-        raise NotImplementedError("The function should be implemented in sub-class \n")
+        raise NotImplementedError("Should be implemented in sub-class \n")
 
     def plot_microstructure(
         self, save_figure: bool = False, fig_name: str = "RVE.png"
@@ -47,9 +49,10 @@ class MicrostructureGenerator:
             error report
         """
 
-        raise NotImplementedError("The function should be implemented in sub-class \n")
+        raise NotImplementedError("Should be implemented in sub-class \n")
 
-    def to_abaqus_format(self, file_name: str = "micro_structure_info.json") -> None:
+    def to_abaqus_format(self,
+                         file_name: str = "micro_structure_info.json") -> None:
         """convert microstructure to abaqus format
 
         Parameters
@@ -63,7 +66,7 @@ class MicrostructureGenerator:
             error report
         """
 
-        raise NotImplementedError("The function should be implemented in sub-class \n")
+        raise NotImplementedError("Should be implemented in sub-class \n")
 
     def to_crate_format(self, file_name: str = "microstructure.rgmsh") -> None:
         """convert microstructure to crate format

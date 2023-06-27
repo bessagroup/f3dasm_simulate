@@ -68,7 +68,7 @@ class CompositeMaterial(SimulatorPart):
 
 
 class HardeningLaw(ABC):
-    def __init__(self, a: float = 0.2, b: float = 0.4, yield_stress: float = 0.5):
+    def __init__(self, a: float = 0.2, b: float = 0.4, yield_stress: float = 0.5) -> None:
         """Abstract class for the hardening law. The hardening law is defined
         by the hardening law table. The hardening law table is a 2D array
         with the first row being the strain and the second row being the
@@ -176,7 +176,8 @@ class RambergHardeningLaw(HardeningLaw):
 
 
 class ElasticMaterial(Material):
-    def __init__(self, youngs_modulus: float = 1.0, poisson_ratio: float = 0.19):
+    def __init__(self, youngs_modulus: float = 1.0,
+                 poisson_ratio: float = 0.19) -> None:
         """Material class for elastic material
 
         Parameters
@@ -197,7 +198,8 @@ class ElasticMaterial(Material):
 
 class PlasticMaterial(Material):
     def __init__(self, hardening_law: HardeningLaw = LinearHardeningLaw(),
-                 youngs_modulus: float = 100.0, poisson_ratio: float = 0.3):
+                 youngs_modulus: float = 100.0,
+                 poisson_ratio: float = 0.3) -> None:
         """Material class for plastic material
 
         Parameters

@@ -112,8 +112,8 @@ class CircleParticles(MicrostructureGenerator):
         self.time_usage = end_time - start_time
 
     def to_abaqus_format(
-        self, file_name: str = "micro_structure_info.json"
-    ) -> None:
+        self, save_file: bool = True, file_name: str = "micro_structure_info.json"
+    ) -> dict:
         microstructure_info = {
             "location_information": self.fiber_positions.tolist(),
             "radius_mu": self.radius_mu,
@@ -123,8 +123,9 @@ class CircleParticles(MicrostructureGenerator):
             "len_end": self.len_end,
             "wid_end": self.wid_end,
         }
-        with open(file_name, "w") as fp:
-            json.dump(microstructure_info, fp)
+        if save_file:
+            with open(file_name, "w") as fp:
+                json.dump(microstructure_info, fp)
 
         return microstructure_info
 

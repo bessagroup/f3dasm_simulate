@@ -16,7 +16,7 @@ design:
       _target_: f3dasm.ContinuousParameter
       lower_bound: 0.0
       upper_bound: 0.01
-    poisson_ratio:
+    youngs_modulus:
       _target_: f3dasm.DiscreteParameter
       lower_bound: 1
       upper_bound: 1000
@@ -58,8 +58,9 @@ material:
       yield_stress:
   fiber_material:
     _target_: f3dasm_simulate.abaqus.material.ElasticMaterial
-    youngs_modulus: 0.19
-    poisson_ratio:
+    youngs_modulus: 
+    poisson_ratio: 0.19
+    
 
 microstructure:
   _target_: f3dasm_simulate.abaqus.microstructure.CircleMicrostructure
@@ -107,4 +108,4 @@ experimentdata:
   name: "cddm_abaqus"
   sampler: RandomUniform
   seed: 1
-  number_of_samples: 3
+  number_of_samples: 1

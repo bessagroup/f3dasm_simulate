@@ -2,7 +2,7 @@
 # =============================================================================
 
 # Standard
-from typing import List, Tuple
+from typing import Any, List, Tuple
 
 # Third-party
 import numpy as np
@@ -21,6 +21,7 @@ __status__ = "Stable"
 
 
 class AmplitudeGenerator:
+
     """amplitude generator"""
 
     def __init__(self,
@@ -30,7 +31,7 @@ class AmplitudeGenerator:
                  arg_name: str = "amplitude",
                  interpolation_method: str = "quadratic",
                  num_dim: int = 3,
-                 seed: any = None,) -> None:
+                 seed: Any = None,) -> None:
         """Initialization"""
         self.num_amplitude = num_amplitude
         self.num_control = num_control

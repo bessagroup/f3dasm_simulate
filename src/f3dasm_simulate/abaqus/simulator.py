@@ -31,7 +31,9 @@ __status__ = 'Stable'
 
 
 class AbaqusSimulator(Simulator):
-    def __init__(self, simulation_info: SimulationInfo, folder_info: FolderInfo, abaqus_info: AbaqusInfo):
+    def __init__(self, simulation_info: SimulationInfo,
+                 folder_info: FolderInfo,
+                 abaqus_info: AbaqusInfo):
         # TODO: sim_info is a combination of simulation_info and abaqus_info, hence making it redundant
         self.folder_info = folder_info
         self.abaqus_info = abaqus_info
@@ -49,7 +51,7 @@ class AbaqusSimulator(Simulator):
         )
 
     def run(self,
-            main_folder: str,
+            main_folder: str, *args
             ) -> dict:
         """run the simulation"""
 
@@ -89,15 +91,6 @@ class AbaqusSimulator(Simulator):
 
         # hidden name information
         abaqus_py_script = "abaScript.py"
-        # folder operations
-        new_path = create_dir(
-            current_folder=self.folder_info.main_work_directory,
-            dir_name=self.folder_info.current_work_directory,
-        )
-        # change work directory
-        os.chdir(new_path)
-        # print the current working folder to the screen
-        print(new_path)
 
         # write sim_info dict to a json file
         write_json(sim_info=self.sim_info, file_name=self.abaqus_input_file)
@@ -123,7 +116,7 @@ class AbaqusSimulator(Simulator):
 
         return flag
 
-    def post_process(self, delete_odb: bool = False) -> None:
+    def post_process(self, delete_odb: bool = True) -> None:
         """post process
 
         Parameters
@@ -154,8 +147,6 @@ class AbaqusSimulator(Simulator):
 
         with open(file_name, "rb") as fd:
             results = pickle.load(fd, fix_imports=True, encoding="latin1")
-
-        # os.chdir(self.folder_info.main_work_directory)
 
         return results
 
@@ -204,6 +195,7 @@ class AbaqusSimulator(Simulator):
             print(f"simulation time :{(end_time - start_time):2f} s")
             # remove files that influence the simulation process
             self.remove_files(directory=os.getcwd())
+
         elif self.abaqus_info.platform == "cluster":
             start_time = time.time()
             os.system(command)
@@ -333,7 +325,7 @@ class AbaqusSimulator(Simulator):
         sub_folder_index : _type_, optional
             second folder index , by default None
         third_folder_index : _type_, optional
-            third forlder index, by default None
+            third folder index, by default None
 
         Raises
         ------

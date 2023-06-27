@@ -40,16 +40,16 @@ def initial_script(config: Config):
         design = f3dasm.DesignSpace.from_yaml(config.design)
 
         # Create the four tasks
-        task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'poisson_ratio': 10,
+        task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'youngs_modulus': 10,
                   '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
                   'b': 0.5, 'yield_stress': 0.5}
-        task_b = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'poisson_ratio': 1,
+        task_b = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'youngs_modulus': 1,
                   '_target_': 'f3dasm_simulate.abaqus.material.SwiftHardeningLaw', 'a': 0.5,
                   'b': 0.4, 'yield_stress': 0.5}
-        task_c = {'vol_req': 0.15, 'radius_mu': 0.0015, 'radius_std': 0.00005, 'poisson_ratio': 1000,
+        task_c = {'vol_req': 0.15, 'radius_mu': 0.0015, 'radius_std': 0.00005, 'youngs_modulus': 1000,
                   '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
                   'b': 0.4, 'yield_stress': 0.5}
-        task_d = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'poisson_ratio': 1,
+        task_d = {'vol_req': 0.30, 'radius_mu': 0.003, 'radius_std': 0.0, 'youngs_modulus': 1,
                   '_target_': 'f3dasm_simulate.abaqus.material.LinearHardeningLaw', 'a': 0.5,
                   'b': 0.4, 'yield_stress': 3.0}
 
@@ -60,7 +60,7 @@ def initial_script(config: Config):
         tasks_c = [{'seed': s, **task_c} for s in seed]
         tasks_d = [{'seed': s, **task_d} for s in seed]
 
-        # combine the lists
+        # combine the lists (big table with all tasks)
         tasks = tasks_a + tasks_b + tasks_c + tasks_d
         tasks_numpy = pd.DataFrame(tasks).to_numpy()
 
@@ -106,7 +106,7 @@ def main(config: Config):
         job(config, execute)
 
 
-def job(config: Config, execute_callable: Callable):
+def job(config: Config, execute_callable: Callable) -> None:
     """Main script that handles the execution of open jobs
 
     Parameters

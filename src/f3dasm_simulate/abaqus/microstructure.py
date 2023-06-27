@@ -26,7 +26,8 @@ __status__ = 'Stable'
 
 
 class Microstructure(SimulatorPart):
-    def __init__(self, size: float = 0.048, radius_mu: float = 0.003, radius_std: float = 0.0,
+    def __init__(self, size: float = 0.048, radius_mu: float = 0.003,
+                 radius_std: float = 0.0,
                  vol_req: float = 0.3, seed: int = 42):
         self.size = size
         self.radius_mu = radius_mu
@@ -66,9 +67,9 @@ class CircleMicrostructure(Microstructure):
         )
         self.microstructure_generator.generate_microstructure(seed=self.seed)
         microstructure_info = self.microstructure_generator.to_abaqus_format(
-            file_name="micro_structure.json"
+            save_file=False
         )
-        self.microstructure_generator.plot_microstructure(save_figure=True)
+        # self.microstructure_generator.plot_microstructure(save_figure=True)
 
         return microstructure_info, self.microstructure_generator.vol_frac
 
