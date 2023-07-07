@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>f3dasm_simulate.abaqus.simulator &mdash; f3dasm_simulate 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            f3dasm_simulate
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apisource/f3dasm_simulate.html">f3dasm_simulate package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apisource/modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">f3dasm_simulate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">f3dasm_simulate.abaqus.simulator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for f3dasm_simulate.abaqus.simulator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Simulator class for Abaqus</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">#                                                                       Modules</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="c1"># Standard</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Third-party</span>
+<span class="kn">from</span> <span class="nn">f3dasm.datageneration</span> <span class="kn">import</span> <span class="n">DataGenerator</span>
+
+<span class="c1"># Local</span>
+<span class="kn">from</span> <span class="nn">.simulator_assertinputs</span> <span class="kn">import</span> <span class="n">is_inputs_proper_defined</span>
+<span class="kn">from</span> <span class="nn">.simulator_info</span> <span class="kn">import</span> <span class="p">(</span><span class="n">AbaqusInfo</span><span class="p">,</span> <span class="n">FolderInfo</span><span class="p">,</span> <span class="n">SimulationInfo</span><span class="p">,</span>
+                             <span class="n">combine_info</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">create_dir</span><span class="p">,</span> <span class="n">print_banner</span><span class="p">,</span> <span class="n">write_json</span>
+
+<span class="c1">#                                                        Authorship and Credits</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Jiaxiang Yi (J.Yi@tudelft.nl), Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)&#39;</span>
+<span class="n">__credits__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Martin van der Schelling&#39;</span><span class="p">,</span> <span class="s1">&#39;Jiaxiang Yi&#39;</span><span class="p">]</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Stable&#39;</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="AbaqusSimulator"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator">[docs]</a><span class="k">class</span> <span class="nc">AbaqusSimulator</span><span class="p">(</span><span class="n">DataGenerator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation_info</span><span class="p">:</span> <span class="n">SimulationInfo</span><span class="p">,</span>
+                 <span class="n">folder_info</span><span class="p">:</span> <span class="n">FolderInfo</span><span class="p">,</span>
+                 <span class="n">abaqus_info</span><span class="p">:</span> <span class="n">AbaqusInfo</span><span class="p">):</span>
+        <span class="c1"># TODO: sim_info is a combination of simulation_info and abaqus_info, hence making it redundant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span> <span class="o">=</span> <span class="n">folder_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span> <span class="o">=</span> <span class="n">abaqus_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abaqus_input_file</span> <span class="o">=</span> <span class="s2">&quot;sim_info.json&quot;</span>
+
+        <span class="c1"># Add the sim_path and sim_script to the sim_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">sim_path</span> <span class="o">=</span> <span class="n">simulation_info</span><span class="o">.</span><span class="n">sim_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">sim_script</span> <span class="o">=</span> <span class="n">simulation_info</span><span class="o">.</span><span class="n">sim_script</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_info</span> <span class="o">=</span> <span class="n">combine_info</span><span class="p">(</span><span class="n">abaqus_info</span><span class="o">=</span><span class="n">abaqus_info</span><span class="p">,</span>
+                                     <span class="n">simulation_info</span><span class="o">=</span><span class="n">simulation_info</span><span class="p">,</span> <span class="n">folder_info</span><span class="o">=</span><span class="n">folder_info</span><span class="p">)</span>
+
+        <span class="n">is_inputs_proper_defined</span><span class="p">(</span>
+            <span class="n">folder_info</span><span class="o">=</span><span class="n">folder_info</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">sim_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_info</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="AbaqusSimulator.run"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">main_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;run the simulation&quot;&quot;&quot;</span>
+
+        <span class="c1"># save the current absolute path</span>
+        <span class="n">home_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+        <span class="c1"># TODO: change to pre_process, execute, post_process order</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">main_folder</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">third_folder_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_back_results</span><span class="p">()</span>
+
+        <span class="c1"># change back to the home path</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">home_path</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.pre_process"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">sub_folder_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">third_folder_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;case_0&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># number of samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_working_folder</span><span class="p">(</span>
+            <span class="n">folder_index</span><span class="p">,</span>
+            <span class="n">sub_folder_index</span><span class="p">,</span>
+            <span class="n">third_folder_name</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.execute"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sleep_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+        <span class="n">refresh_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function that calls the FEM simulator the pre-processing&quot;&quot;&quot;</span>
+
+        <span class="c1"># hidden name information</span>
+        <span class="n">abaqus_py_script</span> <span class="o">=</span> <span class="s2">&quot;abaScript.py&quot;</span>
+
+        <span class="c1"># write sim_info dict to a json file</span>
+        <span class="n">write_json</span><span class="p">(</span><span class="n">sim_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_info</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abaqus_input_file</span><span class="p">)</span>
+
+        <span class="c1"># create new script for running abaqus simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_new_script</span><span class="p">(</span>
+            <span class="n">file_name</span><span class="o">=</span><span class="n">abaqus_py_script</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># run abaqus simulation and submit the job</span>
+        <span class="n">print_banner</span><span class="p">(</span><span class="s2">&quot;start abaqus simulation&quot;</span><span class="p">)</span>
+        <span class="c1"># system command for running abaqus</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;abaqus cae noGUI=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">abaqus_py_script</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; -mesa&quot;</span>
+
+        <span class="c1"># run (flag is for advanced usage)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_abaqus_simulation</span><span class="p">(</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="n">max_time</span><span class="p">,</span>
+            <span class="n">sleep_time</span><span class="o">=</span><span class="n">sleep_time</span><span class="p">,</span>
+            <span class="n">refresh_time</span><span class="o">=</span><span class="n">refresh_time</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.post_process"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_odb</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;post process</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        delete_odb : bool, optional</span>
+<span class="sd">            delete odb file to save memory, by default True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span><span class="p">:</span>
+            <span class="n">print_banner</span><span class="p">(</span><span class="s2">&quot;abaqus post analysis&quot;</span><span class="p">)</span>
+            <span class="c1"># path with the python-script</span>
+            <span class="n">postprocess_script</span> <span class="o">=</span> <span class="s2">&quot;getResults.py&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_new_script</span><span class="p">(</span>
+                <span class="n">file_name</span><span class="o">=</span><span class="n">postprocess_script</span><span class="p">,</span>
+                <span class="n">status</span><span class="o">=</span><span class="s2">&quot;post_process&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;abaqus cae noGUI=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">postprocess_script</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; -mesa&quot;</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+            <span class="c1"># remove files that influence the simulation process</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_files</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+        <span class="c1"># remove the odb file to save memory</span>
+        <span class="k">if</span> <span class="n">delete_odb</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_files</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">file_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.odb&quot;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.read_back_results"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.read_back_results">[docs]</a>    <span class="k">def</span> <span class="nf">read_back_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;results.p&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">fix_imports</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin1&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator._run_abaqus_simulation"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator._run_abaqus_simulation">[docs]</a>    <span class="k">def</span> <span class="nf">_run_abaqus_simulation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sleep_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+        <span class="n">refresh_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span><span class="p">:</span>
+
+            <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span>
+                    <span class="n">refresh_time</span> <span class="o">-</span> <span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">%</span> <span class="n">refresh_time</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="c1">#</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span><span class="o">.</span><span class="n">job_name</span> <span class="o">+</span> <span class="s2">&quot;.msg&quot;</span><span class="p">)</span>
+                    <span class="n">word1</span> <span class="o">=</span> <span class="s2">&quot;THE ANALYSIS HAS BEEN COMPLETED&quot;</span>
+                    <span class="k">if</span> <span class="n">word1</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
+                        <span class="n">proc</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">kill_abaqus_process</span><span class="p">()</span>
+                        <span class="n">flag</span> <span class="o">=</span> <span class="s2">&quot;finished&quot;</span>
+                        <span class="k">break</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;abaqus license is not enough,&quot;</span>
+                        <span class="s2">&quot;waiting for license authorization&quot;</span>
+                    <span class="p">)</span>
+                <span class="c1"># over time killing</span>
+                <span class="k">if</span> <span class="n">max_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_time</span><span class="p">:</span>
+                        <span class="n">proc</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">kill_abaqus_process</span><span class="p">()</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;overtime kill&quot;</span><span class="p">)</span>
+                        <span class="n">flag</span> <span class="o">=</span> <span class="s2">&quot;killed&quot;</span>
+                        <span class="k">break</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;simulation time :</span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="c1"># remove files that influence the simulation process</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_files</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;cluster&quot;</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="s2">&quot;finished&quot;</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;simulation time :</span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;platform not be implemented&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.make_new_script"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.make_new_script">[docs]</a>    <span class="k">def</span> <span class="nf">make_new_script</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;simulation&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;import os </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;import sys </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;import json </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;sys.path.extend([&#39;&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">script_path</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;&#39;]) </span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;from &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">sim_path</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot; import &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">sim_script</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;file = &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abaqus_input_file</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39; </span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;with open(file, &#39;r&#39;) as f:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;	dict = json.load(f)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">sim_script</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;(dict)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;post_process&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;import os</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;import sys</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;sys.path.extend([&#39;&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">script_path</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;&#39;]) </span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;from &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">post_path</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot; import &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">post_script</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">post_script</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;(&#39;&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abaqus_info</span><span class="o">.</span><span class="n">job_name</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;&#39;)</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;provide correct status of simulation </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.kill_abaqus_process"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.kill_abaqus_process">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">kill_abaqus_process</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;kill abaqus simulation process&quot;&quot;&quot;</span>
+        <span class="n">standard_solver</span> <span class="o">=</span> <span class="s2">&quot;pkill standard&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">standard_solver</span><span class="p">)</span>
+        <span class="n">ABQcaeK</span> <span class="o">=</span> <span class="s2">&quot;pkill ABQcaeK&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">ABQcaeK</span><span class="p">)</span>
+        <span class="n">SMAPython</span> <span class="o">=</span> <span class="s2">&quot;pkill SMAPython&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">SMAPython</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator.remove_files"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.remove_files">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">remove_files</span><span class="p">(</span>
+        <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">file_types</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;.log&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.lck&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.SMABulk&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.rec&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.SMAFocus&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.exception&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.simlog&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.023&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.exception&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;remove file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        directory : str</span>
+<span class="sd">            target folder</span>
+<span class="sd">        file_type : str</span>
+<span class="sd">            file name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get all files in this folder</span>
+        <span class="n">all_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">target_file</span> <span class="ow">in</span> <span class="n">file_types</span><span class="p">:</span>
+            <span class="c1"># get the target file names</span>
+            <span class="n">filtered_files</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">file</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">all_files</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">target_file</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="c1"># remove the target files is existed</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filtered_files</span><span class="p">:</span>
+                <span class="n">path_to_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbaqusSimulator._create_working_folder"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.simulator.AbaqusSimulator._create_working_folder">[docs]</a>    <span class="k">def</span> <span class="nf">_create_working_folder</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">folder_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sub_folder_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">third_folder_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;create folders for excuting abaqus simulations</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        folder_index : int, optional</span>
+<span class="sd">            first folder index , by default None</span>
+<span class="sd">        sub_folder_index : _type_, optional</span>
+<span class="sd">            second folder index , by default None</span>
+<span class="sd">        third_folder_index : _type_, optional</span>
+<span class="sd">            third folder index, by default None</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            provide sub_folder_index</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            provide third_folder_index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">folder_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sub_folder_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span> <span class="o">=</span> <span class="n">third_folder_name</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">third_folder_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span> <span class="o">=</span> <span class="s2">&quot;point_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sub_folder_index</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;point_&quot;</span>
+                        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sub_folder_index</span><span class="p">)</span>
+                        <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+                        <span class="o">+</span> <span class="n">third_folder_name</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sub_folder_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;provide sub_folder_index&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">third_folder_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;provide third_folder_index&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s2">&quot;gen_&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder_index</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;/point_&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sub_folder_index</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+                    <span class="o">+</span> <span class="n">third_folder_name</span>
+                <span class="p">)</span>
+        <span class="n">new_path</span> <span class="o">=</span> <span class="n">create_dir</span><span class="p">(</span>
+            <span class="n">current_folder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">main_work_directory</span><span class="p">,</span>
+            <span class="n">dir_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_info</span><span class="o">.</span><span class="n">current_work_directory</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">working_folder</span> <span class="o">=</span> <span class="n">new_path</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, M.P. van der Schelling.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

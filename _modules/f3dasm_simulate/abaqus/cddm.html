@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>f3dasm_simulate.abaqus.cddm &mdash; f3dasm_simulate 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            f3dasm_simulate
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apisource/f3dasm_simulate.html">f3dasm_simulate package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apisource/modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">f3dasm_simulate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">f3dasm_simulate.abaqus.cddm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for f3dasm_simulate.abaqus.cddm</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.loading</span> <span class="kn">import</span> <span class="n">Loading</span>
+<span class="kn">from</span> <span class="nn">.material</span> <span class="kn">import</span> <span class="n">CompositeMaterial</span><span class="p">,</span> <span class="n">Material</span><span class="p">,</span> <span class="n">PlasticMaterial</span>
+<span class="kn">from</span> <span class="nn">.microstructure</span> <span class="kn">import</span> <span class="n">Microstructure</span>
+<span class="kn">from</span> <span class="nn">.simulator_info</span> <span class="kn">import</span> <span class="n">SimulationInfo</span>
+
+
+<div class="viewcode-block" id="VonMisesPlasticElasticPathLoads"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.cddm.VonMisesPlasticElasticPathLoads">[docs]</a><span class="k">class</span> <span class="nc">VonMisesPlasticElasticPathLoads</span><span class="p">(</span><span class="n">SimulationInfo</span><span class="p">):</span>
+
+<div class="viewcode-block" id="VonMisesPlasticElasticPathLoads.__init__"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.cddm.VonMisesPlasticElasticPathLoads.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material</span><span class="p">:</span> <span class="n">Material</span><span class="p">,</span>
+                 <span class="n">microstructure</span><span class="p">:</span> <span class="n">Microstructure</span><span class="p">,</span> <span class="n">loading</span><span class="p">:</span> <span class="n">Loading</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Class that contains the information to run a simulation with</span>
+<span class="sd">        a composite material with two phases. The phases are assumed to be</span>
+<span class="sd">        elastic or plastic. The plastic phase is assumed to be a von Mises</span>
+<span class="sd">        material.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material</span>
+<span class="sd">            material object</span>
+<span class="sd">        microstructure</span>
+<span class="sd">            microstructure object</span>
+<span class="sd">        loading</span>
+<span class="sd">            loading conditions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">microstructure</span><span class="o">=</span><span class="n">microstructure</span><span class="p">,</span>
+                         <span class="n">loading</span><span class="o">=</span><span class="n">loading</span><span class="p">)</span>
+
+        <span class="c1"># Reference to the python script that will be used to run the simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_path</span> <span class="o">=</span> <span class="s2">&quot;benchmark_abaqus_scripts.two_materials_rve&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_script</span> <span class="o">=</span> <span class="s2">&quot;VonMisesPlasticElasticPathLoads&quot;</span></div>
+
+<div class="viewcode-block" id="VonMisesPlasticElasticPathLoads._run_checks"><a class="viewcode-back" href="../../../apisource/f3dasm_simulate.abaqus.html#f3dasm_simulate.abaqus.cddm.VonMisesPlasticElasticPathLoads._run_checks">[docs]</a>    <span class="k">def</span> <span class="nf">_run_checks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Check if the material is not plastic</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">,</span> <span class="n">PlasticMaterial</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The material must be plastic.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if we have a composite material</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">,</span> <span class="n">CompositeMaterial</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The material must be a composite.&quot;</span><span class="p">)</span></div></div>
+
+        <span class="c1"># You can add more checks here</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, M.P. van der Schelling.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
