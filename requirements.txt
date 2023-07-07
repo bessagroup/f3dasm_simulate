@@ -1,1 +1,1 @@
-f3dasm@git+https://github.com/bessagroup/f3dasm@0cf16d0
+f3dasm>=1.2.0

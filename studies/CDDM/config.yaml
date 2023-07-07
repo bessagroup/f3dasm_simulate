@@ -1,0 +1,113 @@
+# 1. Design of Experiments
+
+domain:
+  input_space:
+    seed:
+      _target_: f3dasm.DiscreteParameter
+      lower_bound: 0
+      upper_bound: 1000
+    vol_req:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.1
+      upper_bound: 0.7
+    radius_mu:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.0
+      upper_bound: 0.1
+    radius_std:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.0
+      upper_bound: 0.01
+    youngs_modulus:
+      _target_: f3dasm.DiscreteParameter
+      lower_bound: 1
+      upper_bound: 1000
+    _target_: # Hardening law
+      _target_: f3dasm.CategoricalParameter
+      categories:
+        [
+          f3dasm_simulate.abaqus.material.LinearHardeningLaw,
+          f3dasm_simulate.abaqus.material.SwiftHardeningLaw,
+          f3dasm_simulate.abaqus.material.RambergHardeningLaw,
+        ]
+    a:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.0
+      upper_bound: 0.5
+    b:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.0
+      upper_bound: 0.5
+    yield_stress:
+      _target_: f3dasm.ContinuousParameter
+      lower_bound: 0.5
+      upper_bound: 3.0
+
+  output_space:
+    status:
+      _target_: f3dasm.ContinuousParameter
+
+hpc:
+  jobid: -1
+
+experimentdata:
+  existing_data_path: False
+  name: cddm
+
+sampler:
+  number_of_samples: 10
+
+# 2. Data Generation: Simulation parameters
+
+material:
+  _target_: f3dasm_simulate.abaqus.material.CompositeMaterial
+  matrix_material:
+    _target_: f3dasm_simulate.abaqus.material.PlasticMaterial
+    youngs_modulus: 100.0
+    poisson_ratio: 0.3
+    hardening_law:
+      _target_:
+      a:
+      b:
+      yield_stress:
+  fiber_material:
+    _target_: f3dasm_simulate.abaqus.material.ElasticMaterial
+    youngs_modulus:
+    poisson_ratio: 0.19
+
+microstructure:
+  _target_: f3dasm_simulate.abaqus.microstructure.CircleMicrostructure
+  size: 0.048
+  radius_mu:
+  radius_std:
+  vol_req:
+  seed: 42
+
+loading:
+  _target_: f3dasm_simulate.abaqus.loading.PathLoading
+  strain: [0.02, 0.02, 0.02]
+  amplitude_generator:
+    _target_: f3dasm_simulate.abaqus.loading.AmplitudeGenerator
+    num_control: 8
+    num_steps: 100
+    num_amplitude: 1
+    arg_name: amplitude
+    interpolation_method: quadratic
+    num_dim: 3
+    seed:
+
+abaqus:
+  platform: "ubuntu"
+  num_cpu: 1
+  print_info: False
+  simulation_time: 1.0
+  mesh_partition: 50
+  num_steps: 100
+  job_name: "job"
+
+files:
+  main_work_directory: "."
+  script_path: /home/martin/Documents/GitHub/f3dasm_simulate/src/f3dasm_simulate/abaqus/scriptbase
+  current_work_directory: case_0
+  post_path: basic_analysis_scripts.post_process
+  post_script: PostProcess2D

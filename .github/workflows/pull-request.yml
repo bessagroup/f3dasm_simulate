@@ -1,8 +1,9 @@
-name: Pull request to pr/** branches
+name: Pull request from pr/** branches
 
 on:
   pull_request:
     branches:
+      - "main"
       - "pr/**"
 
 jobs:

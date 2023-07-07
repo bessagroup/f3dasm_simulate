@@ -15,13 +15,16 @@ Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 # =============================================================================
 
 # Standard
-import logging
-
-from . import abaqus
-from .example_module import add_one
 
 # Third-party
 
+
+# Local
+from ..example_module import add_one
+from . import (loading, material, microstructure, overwrite_inputs, simulator,
+               simulator_info)
+from .cddm import VonMisesPlasticElasticPathLoads
+from .simulator import AbaqusSimulator
 
 #                                                        Authorship and Credits
 # =============================================================================
@@ -31,11 +34,3 @@ __status__ = 'Stable'
 # =============================================================================
 #
 # =============================================================================
-
-__version__ = '1.0.0'
-
-# Create a logger
-logger = logging.getLogger("f3dasm_simulate")
-
-# Log welcome message and the version of f3dasm_simulate
-logger.info(f"Imported f3dasm_simulate (version: {__version__})")

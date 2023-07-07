@@ -1,6 +1,14 @@
 f3dasm\_simulate package
 ========================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   f3dasm_simulate.abaqus
+
 Submodules
 ----------
 
