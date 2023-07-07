@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 from abaqus_cddm import execute
 from config import Config
-from f3dasm._logging import logger
+from f3dasm.logger import logger
 from hydra.core.config_store import ConfigStore
 
 #                                                          Authorship & Credits
@@ -29,15 +29,13 @@ __status__ = 'Stable'
 def initial_script(config: Config):
     # Check if we use an existing dataset
     if config.experimentdata.existing_data_path is not False:
-        data = f3dasm.ExperimentData.from_csv(
+        data = f3dasm.ExperimentData.from_file(
             filename=f"{config.experimentdata.existing_data_path}/{config.experimentdata.name}")
-        job_queue = f3dasm.experiment.JobQueue.from_json(
-            json_filename=config.hpc.jobqueue_filename, path=config.experimentdata.existing_data_path)
 
     # Else, create the dataset
     else:
         # Create the DesignSpace
-        design = f3dasm.DesignSpace.from_yaml(config.design)
+        design = f3dasm.Domain.from_yaml(config.domain)
 
         # Create the four tasks
         task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'youngs_modulus': 10,
@@ -54,7 +52,7 @@ def initial_script(config: Config):
                   'b': 0.4, 'yield_stress': 3.0}
 
         # creata a list of tasks where each task is a dictionary of task_a plus a seed number
-        seed = range(config.experimentdata.number_of_samples)
+        seed = range(config.sampler.number_of_samples)
         tasks_a = [{'seed': s, **task_a} for s in seed]
         tasks_b = [{'seed': s, **task_b} for s in seed]
         tasks_c = [{'seed': s, **task_c} for s in seed]
@@ -73,15 +71,11 @@ def initial_script(config: Config):
         # Fill the data object
         data.add_numpy_arrays(input=tasks_numpy, output=output_array)
 
-        # Create the JobQueue object
-        job_queue = f3dasm.experiment.JobQueue.from_experimentdata(
-            filename=config.hpc.jobqueue_filename, experimentdata=data)
+        # Open up all the jobs
+        data.jobs.mark_all_open()
 
     # Store the ExperimentData to a csv file
     data.store(config.experimentdata.name)
-
-    # Write the JobQueue object to a file
-    job_queue.write_new_jobfile()
 
 
 @hydra.main(config_path=".", config_name="config")
@@ -107,39 +101,13 @@ def main(config: Config):
 
 
 def job(config: Config, execute_callable: Callable) -> None:
-    """Main script that handles the execution of open jobs
+    logger.setLevel(logging.DEBUG)
+    data = f3dasm.ExperimentData.from_file(filename=config.experimentdata.name)
+    logger.debug('Start job execution')
+    data.run(execute_callable, mode='sequential', kwargs={'config': config})
 
-    Parameters
-    ----------
-    config
-        Hydra configuration file object
-    execute_callable
-        function to execute a job. Requires to arguments; the config and any **kwargs from the design
-    """
-
-    # Retrieve the queue
-    job_queue = f3dasm.experiment.JobQueue(filename=config.hpc.jobqueue_filename)
-
-    # Let the node repeat the execution of jobs
-    while True:
-        try:
-            jobnumber = job_queue.get()
-        except f3dasm.experiment.NoOpenJobsError:
-            logger.info("There are no open jobs left!")
-            break
-
-        data = f3dasm.ExperimentData.from_csv(filename=config.experimentdata.name)
-        designparameters = data.get_inputdata_by_index(jobnumber)
-        logger.info(f"Executing job {jobnumber} with parameters {designparameters}")
-        try:
-            returnvalue = execute_callable(config, jobnumber, designparameters)
-            job_queue.mark_finished(jobnumber)
-        except Exception as e:
-            logging.exception(f"An exception of type {type(e).__name__} occurred: {e}")
-            returnvalue = 'ERROR'
-            job_queue.mark_error(jobnumber)
-
-        data.write_outputdata_by_index(filename=config.experimentdata.name, index=jobnumber, value=returnvalue)
+    # After finishing, store the ExperimentData to a csv file
+    data.store(config.experimentdata.name)
 
 
 cs = ConfigStore.instance()

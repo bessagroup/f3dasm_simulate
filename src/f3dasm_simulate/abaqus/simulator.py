@@ -12,7 +12,7 @@ import subprocess
 import time
 
 # Third-party
-from f3dasm.simulation import Simulator
+from f3dasm.datageneration import DataGenerator
 
 # Local
 from .simulator_assertinputs import is_inputs_proper_defined
@@ -30,7 +30,7 @@ __status__ = 'Stable'
 # =============================================================================
 
 
-class AbaqusSimulator(Simulator):
+class AbaqusSimulator(DataGenerator):
     def __init__(self, simulation_info: SimulationInfo,
                  folder_info: FolderInfo,
                  abaqus_info: AbaqusInfo):

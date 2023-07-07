@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 
 from config import Config
+from f3dasm import Design
 from hydra.utils import instantiate
 from omegaconf import OmegaConf
 from omegaconf.dictconfig import DictConfig
@@ -24,16 +25,18 @@ def combine_config_and_designparameters(config: Config, designparameters: dict) 
     return config_
 
 
-def execute(config: Config, jobnumber: int, designparameters: dict):
+def execute(design: Design, config: Config):
 
-    config = combine_config_and_designparameters(config=config, designparameters=designparameters)
+    input_values = design.input_data
+
+    config = combine_config_and_designparameters(config=config, designparameters=input_values)
 
     # Combine the design parameters with the config parameters
     config = f3dasm_simulate.abaqus.overwrite_inputs.overwrite_config_with_design_parameters(
-        config=config, design_dict=designparameters)
+        config=config, design_dict=input_values)
 
     # Set the current work directory to the jobnumber
-    config.files.current_work_directory = f"case_{jobnumber}"
+    config.files.current_work_directory = f"case_{design.job_number}"
 
     # Create the simulation_info
     material = instantiate(config.material)
@@ -52,7 +55,8 @@ def execute(config: Config, jobnumber: int, designparameters: dict):
     # Run the simulator
     simulator.run(main_folder=str(Path()))
 
-    logging.info(f"case_{jobnumber} finished")
+    logging.info(f"case_{design.job_number} finished")
 
+    design.set('status', folder_info.current_work_directory)
     # Return the working directory name
-    return folder_info.current_work_directory
+    return design

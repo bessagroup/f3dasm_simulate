@@ -24,6 +24,7 @@ from ..example_module import add_one
 from . import (loading, material, microstructure, overwrite_inputs, simulator,
                simulator_info)
 from .cddm import VonMisesPlasticElasticPathLoads
+from .simulator import AbaqusSimulator
 
 #                                                        Authorship and Credits
 # =============================================================================

@@ -38,8 +38,10 @@ class HPCConfig:
 class ExperimentConfig:
     existing_data_path: Union[bool, str]
     name: str
-    sampler: str
-    seed: int
+
+
+@dataclass
+class SamplerConfig:
     number_of_samples: int
 
 
@@ -53,3 +55,4 @@ class Config:
     design: DesignConfig
     hpc: HPCConfig
     experimentdata: ExperimentConfig
+    sampler: SamplerConfig

@@ -1,4 +1,6 @@
-design:
+# 1. Design of Experiments
+
+domain:
   input_space:
     seed:
       _target_: f3dasm.DiscreteParameter
@@ -45,6 +47,18 @@ design:
     status:
       _target_: f3dasm.ContinuousParameter
 
+hpc:
+  jobid: -1
+
+experimentdata:
+  existing_data_path: False
+  name: cddm
+
+sampler:
+  number_of_samples: 10
+
+# 2. Data Generation: Simulation parameters
+
 material:
   _target_: f3dasm_simulate.abaqus.material.CompositeMaterial
   matrix_material:
@@ -58,9 +72,8 @@ material:
       yield_stress:
   fiber_material:
     _target_: f3dasm_simulate.abaqus.material.ElasticMaterial
-    youngs_modulus: 
+    youngs_modulus:
     poisson_ratio: 0.19
-    
 
 microstructure:
   _target_: f3dasm_simulate.abaqus.microstructure.CircleMicrostructure
@@ -94,18 +107,7 @@ abaqus:
 
 files:
   main_work_directory: "."
-  script_path: /home/jiaxiangyi/Documents/rvesimulator/src/rvesimulator/scriptbase
+  script_path: /home/martin/Documents/GitHub/f3dasm_simulate/src/f3dasm_simulate/abaqus/scriptbase
   current_work_directory: case_0
   post_path: basic_analysis_scripts.post_process
   post_script: PostProcess2D
-
-hpc:
-  jobid: -1
-  jobqueue_filename: "jobqueue"
-
-experimentdata:
-  existing_data_path: False
-  name: "cddm_abaqus"
-  sampler: RandomUniform
-  seed: 1
-  number_of_samples: 1

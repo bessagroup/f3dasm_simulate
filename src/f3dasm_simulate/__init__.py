@@ -15,11 +15,13 @@ Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 # =============================================================================
 
 # Standard
-
-# Third-party
+import logging
 
 from . import abaqus
 from .example_module import add_one
+
+# Third-party
+
 
 #                                                        Authorship and Credits
 # =============================================================================
@@ -29,3 +31,11 @@ __status__ = 'Stable'
 # =============================================================================
 #
 # =============================================================================
+
+__version__ = '1.0.0'
+
+# Create a logger
+logger = logging.getLogger("f3dasm_simulate")
+
+# Log welcome message and the version of f3dasm_simulate
+logger.info(f"Imported f3dasm_simulate (version: {__version__})")
