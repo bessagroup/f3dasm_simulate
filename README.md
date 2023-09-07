@@ -1,4 +1,14 @@
 ## f3dasm_simulate
+
+***
+
+[![Python](https://img.shields.io/pypi/pyversions/f3dasm-simulate)](https://www.python.org)
+[![pypi](https://img.shields.io/pypi/v/f3dasm-simulate.svg)](https://pypi.org/project/f3dasm-simulate/)
+[![GitHub license](https://img.shields.io/badge/license-BSD-blue)](https://github.com/bessagroup/f3dasm_simulate)
+
+[**Docs**](https://bessagroup.github.io/f3dasm_simulate/)
+| [**GitHub**](https://github.com/bessagroup/f3dasm_simulate)
+| [**PyPI**](https://pypi.org/project/f3dasm-simulate/)
       
 **Authors**:
 - Martin van der Schelling ([M.P.vanderSchelling@tudelft.nl](mailto:M.P.vanderSchelling@tudelft.nl))
