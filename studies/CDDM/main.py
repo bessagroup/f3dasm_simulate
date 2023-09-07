@@ -9,7 +9,6 @@ from typing import Callable
 # Third-party
 import f3dasm
 import hydra
-import numpy as np
 import pandas as pd
 from abaqus_cddm import execute
 from config import Config
@@ -35,7 +34,7 @@ def initial_script(config: Config):
     # Else, create the dataset
     else:
         # Create the DesignSpace
-        design = f3dasm.Domain.from_yaml(config.domain)
+        domain = f3dasm.Domain.from_yaml(config.domain)
 
         # Create the four tasks
         task_a = {'vol_req': 0.45, 'radius_mu': 0.01, 'radius_std': 0.003, 'youngs_modulus': 10,
@@ -63,13 +62,10 @@ def initial_script(config: Config):
         tasks_numpy = pd.DataFrame(tasks).to_numpy()
 
         # Create empty data object
-        data = f3dasm.ExperimentData(design)
-
-        # create a 2D numpy array with length of tasks_numpy and values an empty str for output 'status'
-        output_array = np.empty((len(tasks_numpy), 1), dtype=object)
+        data = f3dasm.ExperimentData(domain)
 
         # Fill the data object
-        data.add_numpy_arrays(input=tasks_numpy, output=output_array)
+        data.add_numpy_arrays(input=tasks_numpy)
 
         # Open up all the jobs
         data.jobs.mark_all_open()
