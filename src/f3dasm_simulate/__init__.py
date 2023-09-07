@@ -18,7 +18,6 @@ Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 import logging
 
 from . import abaqus
-from .example_module import add_one
 
 # Third-party
 
@@ -32,7 +31,7 @@ __status__ = 'Stable'
 #
 # =============================================================================
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 # Create a logger
 logger = logging.getLogger("f3dasm_simulate")

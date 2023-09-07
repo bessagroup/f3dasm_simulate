@@ -20,7 +20,6 @@ Author: Martin van der Schelling (M.P.vanderSchelling@tudelft.nl)
 
 
 # Local
-from ..example_module import add_one
 from . import (loading, material, microstructure, overwrite_inputs, simulator,
                simulator_info)
 from .cddm import VonMisesPlasticElasticPathLoads

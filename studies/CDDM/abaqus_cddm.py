@@ -25,7 +25,7 @@ def combine_config_and_designparameters(config: Config, designparameters: dict) 
     return config_
 
 
-def execute(design: Design, config: Config):
+def execute(design: Design, config: Config) -> Design:
 
     input_values = design.input_data
 
@@ -57,6 +57,6 @@ def execute(design: Design, config: Config):
 
     logging.info(f"case_{design.job_number} finished")
 
-    design.set('status', folder_info.current_work_directory)
+    design['status'] = folder_info.current_work_directory
     # Return the working directory name
     return design

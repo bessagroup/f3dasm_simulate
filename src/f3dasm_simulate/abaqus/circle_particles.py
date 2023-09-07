@@ -306,7 +306,7 @@ class CircleParticles(MicrostructureGenerator):
             self.fiber_positions, (iter), new_fiber, axis=0
         )
         iter = iter + int(new_fiber[0, 3])
-        assert type(iter) == int
+        assert type(iter) is int
 
         return iter
 
