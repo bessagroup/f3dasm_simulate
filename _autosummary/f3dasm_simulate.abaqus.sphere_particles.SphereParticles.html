@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>f3dasm_simulate.abaqus.sphere_particles.SphereParticles &mdash; f3dasm_simulate 1.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/readthedocs-custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=def9ab29"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="f3dasm_simulate.abaqus.utils" href="f3dasm_simulate.abaqus.utils.html" />
+    <link rel="prev" title="f3dasm_simulate.abaqus.sphere_particles" href="f3dasm_simulate.abaqus.sphere_particles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            f3dasm_simulate
+          </a>
+              <div class="version">
+                1.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rst_doc_files/simulators.html">Simulators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="f3dasm_simulate.html">Code</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="f3dasm_simulate.abaqus.html">f3dasm_simulate.abaqus</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.amplitudesampler.html">f3dasm_simulate.abaqus.amplitudesampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.cddm.html">f3dasm_simulate.abaqus.cddm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.circle_particles.html">f3dasm_simulate.abaqus.circle_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.loading.html">f3dasm_simulate.abaqus.loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.material.html">f3dasm_simulate.abaqus.material</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.microstructure.html">f3dasm_simulate.abaqus.microstructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.microstructure_generator.html">f3dasm_simulate.abaqus.microstructure_generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.overwrite_inputs.html">f3dasm_simulate.abaqus.overwrite_inputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator.html">f3dasm_simulate.abaqus.simulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_assertinputs.html">f3dasm_simulate.abaqus.simulator_assertinputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_info.html">f3dasm_simulate.abaqus.simulator_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_part.html">f3dasm_simulate.abaqus.simulator_part</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="f3dasm_simulate.abaqus.sphere_particles.html">f3dasm_simulate.abaqus.sphere_particles</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">f3dasm_simulate.abaqus.sphere_particles.SphereParticles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.utils.html">f3dasm_simulate.abaqus.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">f3dasm_simulate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.html">f3dasm_simulate</a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.abaqus.html">f3dasm_simulate.abaqus</a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.abaqus.sphere_particles.html">f3dasm_simulate.abaqus.sphere_particles</a></li>
+      <li class="breadcrumb-item active">f3dasm_simulate.abaqus.sphere_particles.SphereParticles</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/f3dasm_simulate.abaqus.sphere_particles.SphereParticles.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="f3dasm-simulate-abaqus-sphere-particles-sphereparticles">
+<h1>f3dasm_simulate.abaqus.sphere_particles.SphereParticles<a class="headerlink" href="#f3dasm-simulate-abaqus-sphere-particles-sphereparticles" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SphereParticles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_std</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_req</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_guess_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_fiber_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">750</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cycle_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_min_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="f3dasm_simulate.abaqus.microstructure_generator.MicrostructureGenerator.html#f3dasm_simulate.abaqus.microstructure_generator.MicrostructureGenerator" title="f3dasm_simulate.abaqus.microstructure_generator.MicrostructureGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MicrostructureGenerator</span></code></a></p>
+<p>Generate the 3D RVE with different size of sphere</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>MicrosctucturaGenerator</strong> (<em>class</em>) – parent class of microstructure generator</p>
+</dd>
+</dl>
+<p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – length of RVE</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – width of RVE</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – height of RVE</p></li>
+<li><p><strong>radius_mu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – mean of circle’s radius</p></li>
+<li><p><strong>radius_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – std of circle’s radius</p></li>
+<li><p><strong>vol_req</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – required volume fraction</p></li>
+<li><p><strong>num_guess_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximum guess for fibers, by default 50000</p></li>
+<li><p><strong>num_fiber_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximum fiber inside RVE, by default 750</p></li>
+<li><p><strong>num_cycle_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – iteration cycles, by default 15</p></li>
+<li><p><strong>dist_min_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – distance factor, by default 2.07</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">List of Public Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.circle_plot" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.circle_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">circle_plot</span></code></a></p></td>
+<td><p>2d rve plot for circle inclusion</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.crate_rgmsh" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.crate_rgmsh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crate_rgmsh</span></code></a></p></td>
+<td><p>create rgmsh numpy array for crate</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.fiber_volume" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.fiber_volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fiber_volume</span></code></a></p></td>
+<td><p>calculate the fiber volume of the current fiber</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_first_heuristic_fibers" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_first_heuristic_fibers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_first_heuristic_fibers</span></code></a></p></td>
+<td><p>Move fiber to its reference point</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_microstructure" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_microstructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_microstructure</span></code></a></p></td>
+<td><p>generating micro-structure</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_random_fibers" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_random_fibers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_random_fibers</span></code></a></p></td>
+<td><p>generate random fibers with different radiis</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.min_dis_index" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.min_dis_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_dis_index</span></code></a></p></td>
+<td><p>This function is used to identify the index of closest fiber of every fiber, which is very import for the first heuristic stirring to get more space placing the new disks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.new_positions" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.new_positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_positions</span></code></a></p></td>
+<td><p>This is the function used to determine the locations of disks considering the boundary of RVE.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.overlap_check" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.overlap_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overlap_check</span></code></a></p></td>
+<td><p>overlap check of the new fiber and the orginal ones</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.plot_microstructure" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.plot_microstructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_microstructure</span></code></a></p></td>
+<td><p>plot figure for RVE</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.rgmsh_plot" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.rgmsh_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rgmsh_plot</span></code></a></p></td>
+<td><p>contour or voxel plot of the discrete microstructure</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_coordinate" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_coordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sphere_coordinate</span></code></a></p></td>
+<td><p>generate coordinate of sphere</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_plot" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sphere_plot</span></code></a></p></td>
+<td><p>plot 3d rve with sphere inclusion</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_abaqus_format" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_abaqus_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_abaqus_format</span></code></a></p></td>
+<td><p>convert microstructure to abaqus format</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_crate_format" title="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_crate_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_crate_format</span></code></a></p></td>
+<td><p>convert microstructure to crate format</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_std</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_req</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_guess_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_fiber_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">750</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cycle_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_min_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – length of RVE</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – width of RVE</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – height of RVE</p></li>
+<li><p><strong>radius_mu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – mean of circle’s radius</p></li>
+<li><p><strong>radius_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – std of circle’s radius</p></li>
+<li><p><strong>vol_req</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – required volume fraction</p></li>
+<li><p><strong>num_guess_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximum guess for fibers, by default 50000</p></li>
+<li><p><strong>num_fiber_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximum fiber inside RVE, by default 750</p></li>
+<li><p><strong>num_cycle_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – iteration cycles, by default 15</p></li>
+<li><p><strong>dist_min_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – distance factor, by default 2.07</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles._core_iteration">
+<span class="sig-name descname"><span class="pre">_core_iteration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles._core_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles._core_iteration" title="Permalink to this definition"></a></dt>
+<dd><p>core iteration part of the micro-structure generation method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles._first_new_fiber">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_first_new_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles._first_new_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles._first_new_fiber" title="Permalink to this definition"></a></dt>
+<dd><p>generate the first new fiber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – x center</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – y center</p></li>
+<li><p><strong>z</strong> (<em>flost</em>) – z center</p></li>
+<li><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – radius</p></li>
+<li><p><strong>portion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – portion of the fiber(1, 2, 4)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>new fiber</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles._parameter_initialization">
+<span class="sig-name descname"><span class="pre">_parameter_initialization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles._parameter_initialization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles._parameter_initialization" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles._procedure_initialization">
+<span class="sig-name descname"><span class="pre">_procedure_initialization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles._procedure_initialization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles._procedure_initialization" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to generate the first sphere and
+assign the initial values of the algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles._update_fiber_position">
+<span class="sig-name descname"><span class="pre">_update_fiber_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles._update_fiber_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles._update_fiber_position" title="Permalink to this definition"></a></dt>
+<dd><p>update the fiber position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_fiber</strong> (<em>np.ndarray</em>) – the generated new fiber</p></li>
+<li><p><strong>iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – determine the nex fiber should be analysis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>iter</strong> – he updated number of index</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.circle_plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">circle_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'microstructure.png'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.circle_plot" title="Permalink to this definition"></a></dt>
+<dd><p>2d rve plot for circle inclusion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fibers</strong> (<em>np.ndarray</em>) – fiber locations/positions</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – length of the rve</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – with of the rve</p></li>
+<li><p><strong>vol_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – reached volume fraction</p></li>
+<li><p><strong>save_figure</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – save figure , by default False</p></li>
+<li><p><strong>fig_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – figure name , by default “microstrcuture.png”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.crate_rgmsh">
+<span class="sig-name descname"><span class="pre">crate_rgmsh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_discrete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.crate_rgmsh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.crate_rgmsh" title="Permalink to this definition"></a></dt>
+<dd><p>create rgmsh numpy array for crate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_discrete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – number of discrete partition, by default 10</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>3d numpy array that contains the micro-structure information</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.fiber_volume">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fiber_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.fiber_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.fiber_volume" title="Permalink to this definition"></a></dt>
+<dd><p>calculate the fiber volume of the current fiber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – radius</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>vol</strong> – volume of current fiber(disk)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_first_heuristic_fibers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_first_heuristic_fibers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.generate_first_heuristic_fibers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_first_heuristic_fibers" title="Permalink to this definition"></a></dt>
+<dd><p>Move fiber to its reference point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_point</strong> (<em>np.ndarray</em>) – Reference point that the fiber should move to</p></li>
+<li><p><strong>fiber_temp</strong> (<em>np.ndarray</em>) – The considering fiber</p></li>
+<li><p><strong>dist_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the minimum distance factor between two fibers</p></li>
+<li><p><strong>ang</strong> (<em>any</em>) – a random generator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated location of the considering fiber</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_microstructure">
+<span class="sig-name descname"><span class="pre">generate_microstructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.generate_microstructure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_microstructure" title="Permalink to this definition"></a></dt>
+<dd><p>generating micro-structure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>any</em><em>, </em><em>optional</em>) – seed generator or number , by default None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_random_fibers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_fibers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">len_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wid_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wid_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hei_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hei_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_std</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.generate_random_fibers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.generate_random_fibers" title="Permalink to this definition"></a></dt>
+<dd><p>generate random fibers with different radiis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>len_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the start location of length</p></li>
+<li><p><strong>len_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the end location of length</p></li>
+<li><p><strong>wid_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the start location of width</p></li>
+<li><p><strong>wid_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the end location of width</p></li>
+<li><p><strong>hei_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the start height of length</p></li>
+<li><p><strong>hei_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – the end height of height</p></li>
+<li><p><strong>radius_mu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – mean of radius</p></li>
+<li><p><strong>radius_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – standard deviation of radius</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>location information of generated fiber</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.min_dis_index">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_dis_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temp_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_min_dis_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.min_dis_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.min_dis_index" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to identify the index of closest fiber
+of every fiber, which is very import for the first heuristic
+stirring to get more space placing the new disks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>temp_fiber</strong> (<em>np.ndarray</em>) – the fiber been processed</p></li>
+<li><p><strong>fiber_pos</strong> (<em>np.ndarray</em>) – fiber position</p></li>
+<li><p><strong>fiber_min_dis_vector</strong> (<em>np.ndarray</em>) – the first column is the index of the closed point,
+the second column contains the minimum distance between
+those two points</p></li>
+<li><p><strong>ii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the index of the being processed point</p></li>
+<li><p><strong>cycle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the cycle of the algorithm. At different cycles, the
+criteria of identifying the closed point are  different.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>fiber_min_dis_vector</strong> (<em>np.ndarray</em>) – The updated minimum distance array</p></li>
+<li><p><strong>two</strong> (<em>int</em>) – The index of the minimum distance point</p></li>
+<li><p><strong>three</strong> (<em>float</em>) – The minimum distance to the minimum distance point</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.new_positions">
+<span class="sig-name descname"><span class="pre">new_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.new_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.new_positions" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function used to determine the locations of disks
+considering the boundary of RVE. To be specific, the disk should
+be divided into two parts or four parts if it is located in the
+outskirt area</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – new center of X axis</p></li>
+<li><p><strong>y_center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – new center of Y axis</p></li>
+<li><p><strong>z_center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – new center of Z axis</p></li>
+<li><p><strong>radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – radius of the disk</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – width of RVE</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – length of RVE</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – height of RVE</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>XC, YC, ZC, radius, and split  which are the new locations of this fiber
+(because in some locations, the circles need to be split)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.overlap_check">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">overlap_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'step_one'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.overlap_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.overlap_check" title="Permalink to this definition"></a></dt>
+<dd><p>overlap check of the new fiber and the orginal ones</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_fiber</strong> (<em>np.ndarray</em>) – new fiber location</p></li>
+<li><p><strong>fiber_pos</strong> (<em>np.ndarray</em>) – original fiber locations</p></li>
+<li><p><strong>dist_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – distance factor</p></li>
+<li><p><strong>fiber_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – fiber index, by default 0</p></li>
+<li><p><strong>stage</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – stage of the algorithm, by default “step_one”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a flag to indicate overlap status</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – stage not been implemented error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.plot_microstructure">
+<span class="sig-name descname"><span class="pre">plot_microstructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RVE.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.plot_microstructure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.plot_microstructure" title="Permalink to this definition"></a></dt>
+<dd><p>plot figure for RVE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_figure</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – save figure or not , by default False</p></li>
+<li><p><strong>fig_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – figure name, by default “RVE.png”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – error report</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.rgmsh_plot">
+<span class="sig-name descname"><span class="pre">rgmsh_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rgmsh.png'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwarg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.rgmsh_plot" title="Permalink to this definition"></a></dt>
+<dd><p>contour or voxel plot of the discrete microstructure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_fig</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – save figure, by default False</p></li>
+<li><p><strong>fig_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – figure name, by default “rgmsh.png”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_coordinate">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sphere_coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_information</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_coordinate" title="Permalink to this definition"></a></dt>
+<dd><p>generate coordinate of sphere</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_information</strong> (<em>np.ndarray</em>) – a numpy array contains center and radius info of
+a sphere [x, y, z, r]</p></li>
+<li><p><strong>Returns</strong> – </p></li>
+<li><p><strong>-------ss</strong> – </p></li>
+<li><p><strong>tuple</strong> – coordinate of x, y, z</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_plot">
+<span class="sig-name descname"><span class="pre">sphere_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cubic.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.sphere_plot" title="Permalink to this definition"></a></dt>
+<dd><p>plot 3d rve with sphere inclusion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_information</strong> (<em>np.ndarray</em>) – location information</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – length of cubic</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – width of cubic</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – height of cubic</p></li>
+<li><p><strong>vol_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – volume fraction</p></li>
+<li><p><strong>save_figure</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – a flag to indicate if we want save the figure or not, by default False</p></li>
+<li><p><strong>fig_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – fig name, by default “cubic_rve.png”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_abaqus_format">
+<span class="sig-name descname"><span class="pre">to_abaqus_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'micro_structure_info.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/sphere_particles.html#SphereParticles.to_abaqus_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_abaqus_format" title="Permalink to this definition"></a></dt>
+<dd><p>convert microstructure to abaqus format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – file name, by default “micro_structure_info.json”</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – error report</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_crate_format">
+<span class="sig-name descname"><span class="pre">to_crate_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'microstructure.rgmsh'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#f3dasm_simulate.abaqus.sphere_particles.SphereParticles.to_crate_format" title="Permalink to this definition"></a></dt>
+<dd><p>convert microstructure to crate format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “microstructure.rgmsh”</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="f3dasm_simulate.abaqus.sphere_particles.html" class="btn btn-neutral float-left" title="f3dasm_simulate.abaqus.sphere_particles" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="f3dasm_simulate.abaqus.utils.html" class="btn btn-neutral float-right" title="f3dasm_simulate.abaqus.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin van der Schelling.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

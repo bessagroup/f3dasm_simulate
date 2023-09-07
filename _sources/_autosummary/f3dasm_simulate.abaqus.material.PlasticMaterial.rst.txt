@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.material.PlasticMaterial
+================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.material
+
+.. autoclass:: PlasticMaterial
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PlasticMaterial.from_dict
+      ~PlasticMaterial.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

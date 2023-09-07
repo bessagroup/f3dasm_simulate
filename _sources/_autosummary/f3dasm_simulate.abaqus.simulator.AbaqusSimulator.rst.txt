@@ -1,0 +1,34 @@
+f3dasm\_simulate.abaqus.simulator.AbaqusSimulator
+=================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator
+
+.. autoclass:: AbaqusSimulator
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AbaqusSimulator.execute
+      ~AbaqusSimulator.kill_abaqus_process
+      ~AbaqusSimulator.make_new_script
+      ~AbaqusSimulator.post_process
+      ~AbaqusSimulator.pre_process
+      ~AbaqusSimulator.read_back_results
+      ~AbaqusSimulator.remove_files
+      ~AbaqusSimulator.run
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

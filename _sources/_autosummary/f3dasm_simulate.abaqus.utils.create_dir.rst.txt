@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.utils.create\_dir
+=========================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.utils
+
+.. autofunction:: create_dir

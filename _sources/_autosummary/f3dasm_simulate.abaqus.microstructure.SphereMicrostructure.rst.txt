@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.microstructure.SphereMicrostructure
+===========================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.microstructure
+
+.. autoclass:: SphereMicrostructure
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SphereMicrostructure.from_dict
+      ~SphereMicrostructure.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

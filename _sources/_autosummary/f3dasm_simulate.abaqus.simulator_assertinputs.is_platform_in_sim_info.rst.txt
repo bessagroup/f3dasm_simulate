@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.simulator\_assertinputs.is\_platform\_in\_sim\_info
+===========================================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_assertinputs
+
+.. autofunction:: is_platform_in_sim_info

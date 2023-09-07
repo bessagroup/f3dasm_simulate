@@ -1,0 +1,41 @@
+f3dasm\_simulate.abaqus.sphere\_particles.SphereParticles
+=========================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.sphere_particles
+
+.. autoclass:: SphereParticles
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SphereParticles.circle_plot
+      ~SphereParticles.crate_rgmsh
+      ~SphereParticles.fiber_volume
+      ~SphereParticles.generate_first_heuristic_fibers
+      ~SphereParticles.generate_microstructure
+      ~SphereParticles.generate_random_fibers
+      ~SphereParticles.min_dis_index
+      ~SphereParticles.new_positions
+      ~SphereParticles.overlap_check
+      ~SphereParticles.plot_microstructure
+      ~SphereParticles.rgmsh_plot
+      ~SphereParticles.sphere_coordinate
+      ~SphereParticles.sphere_plot
+      ~SphereParticles.to_abaqus_format
+      ~SphereParticles.to_crate_format
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

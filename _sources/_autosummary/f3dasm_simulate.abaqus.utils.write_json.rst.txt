@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.utils.write\_json
+=========================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.utils
+
+.. autofunction:: write_json

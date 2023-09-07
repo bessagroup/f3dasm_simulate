@@ -1,0 +1,33 @@
+f3dasm\_simulate.abaqus.simulator\_part
+=======================================
+
+
+
+
+
+
+.. automodule:: f3dasm_simulate.abaqus.simulator_part
+  
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      SimulatorPart
+   
+   
+
+   
+   
+   
+
+   
+   
+   

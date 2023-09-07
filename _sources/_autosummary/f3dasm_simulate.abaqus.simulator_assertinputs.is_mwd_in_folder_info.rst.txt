@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.simulator\_assertinputs.is\_mwd\_in\_folder\_info
+=========================================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_assertinputs
+
+.. autofunction:: is_mwd_in_folder_info

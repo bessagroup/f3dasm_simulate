@@ -1,0 +1,40 @@
+f3dasm\_simulate.abaqus.material
+================================
+
+
+
+
+
+
+.. automodule:: f3dasm_simulate.abaqus.material
+  
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      CompositeMaterial
+      ElasticMaterial
+      HardeningLaw
+      LinearHardeningLaw
+      Material
+      PlasticMaterial
+      RambergHardeningLaw
+      SwiftHardeningLaw
+   
+   
+
+   
+   
+   
+
+   
+   
+   

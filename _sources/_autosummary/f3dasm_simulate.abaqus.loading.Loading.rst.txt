@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.loading.Loading
+=======================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.loading
+
+.. autoclass:: Loading
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~Loading.from_dict
+      ~Loading.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

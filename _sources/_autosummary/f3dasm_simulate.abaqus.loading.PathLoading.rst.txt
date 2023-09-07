@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.loading.PathLoading
+===========================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.loading
+
+.. autoclass:: PathLoading
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PathLoading.from_dict
+      ~PathLoading.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

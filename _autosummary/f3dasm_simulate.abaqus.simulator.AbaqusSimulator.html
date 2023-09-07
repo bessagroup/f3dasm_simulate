@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>f3dasm_simulate.abaqus.simulator.AbaqusSimulator &mdash; f3dasm_simulate 1.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/readthedocs-custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=def9ab29"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="f3dasm_simulate.abaqus.simulator_assertinputs" href="f3dasm_simulate.abaqus.simulator_assertinputs.html" />
+    <link rel="prev" title="f3dasm_simulate.abaqus.simulator" href="f3dasm_simulate.abaqus.simulator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            f3dasm_simulate
+          </a>
+              <div class="version">
+                1.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rst_doc_files/simulators.html">Simulators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="f3dasm_simulate.html">Code</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="f3dasm_simulate.abaqus.html">f3dasm_simulate.abaqus</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.amplitudesampler.html">f3dasm_simulate.abaqus.amplitudesampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.cddm.html">f3dasm_simulate.abaqus.cddm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.circle_particles.html">f3dasm_simulate.abaqus.circle_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.loading.html">f3dasm_simulate.abaqus.loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.material.html">f3dasm_simulate.abaqus.material</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.microstructure.html">f3dasm_simulate.abaqus.microstructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.microstructure_generator.html">f3dasm_simulate.abaqus.microstructure_generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.overwrite_inputs.html">f3dasm_simulate.abaqus.overwrite_inputs</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator.html">f3dasm_simulate.abaqus.simulator</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">f3dasm_simulate.abaqus.simulator.AbaqusSimulator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_assertinputs.html">f3dasm_simulate.abaqus.simulator_assertinputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_info.html">f3dasm_simulate.abaqus.simulator_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.simulator_part.html">f3dasm_simulate.abaqus.simulator_part</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.sphere_particles.html">f3dasm_simulate.abaqus.sphere_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="f3dasm_simulate.abaqus.utils.html">f3dasm_simulate.abaqus.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">f3dasm_simulate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.html">f3dasm_simulate</a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.abaqus.html">f3dasm_simulate.abaqus</a></li>
+          <li class="breadcrumb-item"><a href="f3dasm_simulate.abaqus.simulator.html">f3dasm_simulate.abaqus.simulator</a></li>
+      <li class="breadcrumb-item active">f3dasm_simulate.abaqus.simulator.AbaqusSimulator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/f3dasm_simulate.abaqus.simulator.AbaqusSimulator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="f3dasm-simulate-abaqus-simulator-abaqussimulator">
+<h1>f3dasm_simulate.abaqus.simulator.AbaqusSimulator<a class="headerlink" href="#f3dasm-simulate-abaqus-simulator-abaqussimulator" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbaqusSimulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abaqus_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://bessagroup.github.io/f3dasm/_autosummary/f3dasm.datageneration.datagenerator.DataGenerator.html#f3dasm.datageneration.datagenerator.DataGenerator" title="(in f3dasm v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataGenerator</span></code></a></p>
+<p class="rubric">List of Public Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.execute" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.execute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute</span></code></a></p></td>
+<td><p>Function that calls the FEM simulator the pre-processing</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.kill_abaqus_process" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.kill_abaqus_process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kill_abaqus_process</span></code></a></p></td>
+<td><p>kill abaqus simulation process</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_new_script</span></code></p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.post_process" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.post_process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">post_process</span></code></a></p></td>
+<td><p>post process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.pre_process" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.pre_process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pre_process</span></code></a></p></td>
+<td><p>Function that handles the pre-processing</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_back_results</span></code></p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.remove_files" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.remove_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_files</span></code></a></p></td>
+<td><p>remove file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.run" title="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
+<td><p>run the simulation</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator._create_working_folder">
+<span class="sig-name descname"><span class="pre">_create_working_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_folder_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">third_folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator._create_working_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator._create_working_folder" title="Permalink to this definition"></a></dt>
+<dd><p>create folders for excuting abaqus simulations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – first folder index , by default None</p></li>
+<li><p><strong>sub_folder_index</strong> (<em>_type_</em><em>, </em><em>optional</em>) – second folder index , by default None</p></li>
+<li><p><strong>third_folder_index</strong> (<em>_type_</em><em>, </em><em>optional</em>) – third folder index, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – provide sub_folder_index</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – provide third_folder_index</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sleep_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Function that calls the FEM simulator the pre-processing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.kill_abaqus_process">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kill_abaqus_process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.kill_abaqus_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.kill_abaqus_process" title="Permalink to this definition"></a></dt>
+<dd><p>kill abaqus simulation process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.post_process">
+<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete_odb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.post_process" title="Permalink to this definition"></a></dt>
+<dd><p>post process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delete_odb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – delete odb file to save memory, by default True</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.pre_process">
+<span class="sig-name descname"><span class="pre">pre_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_folder_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">third_folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'case_0'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.pre_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.pre_process" title="Permalink to this definition"></a></dt>
+<dd><p>Function that handles the pre-processing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.remove_files">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['.log',</span> <span class="pre">'.lck',</span> <span class="pre">'.SMABulk',</span> <span class="pre">'.rec',</span> <span class="pre">'.SMAFocus',</span> <span class="pre">'.exception',</span> <span class="pre">'.simlog',</span> <span class="pre">'.023',</span> <span class="pre">'.exception']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.remove_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.remove_files" title="Permalink to this definition"></a></dt>
+<dd><p>remove file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – target folder</p></li>
+<li><p><strong>file_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – file name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="f3dasm_simulate.abaqus.simulator.AbaqusSimulator.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_folder</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/f3dasm_simulate/abaqus/simulator.html#AbaqusSimulator.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#f3dasm_simulate.abaqus.simulator.AbaqusSimulator.run" title="Permalink to this definition"></a></dt>
+<dd><p>run the simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="f3dasm_simulate.abaqus.simulator.html" class="btn btn-neutral float-left" title="f3dasm_simulate.abaqus.simulator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="f3dasm_simulate.abaqus.simulator_assertinputs.html" class="btn btn-neutral float-right" title="f3dasm_simulate.abaqus.simulator_assertinputs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin van der Schelling.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

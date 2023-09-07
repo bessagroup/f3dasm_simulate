@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.material.CompositeMaterial
+==================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.material
+
+.. autoclass:: CompositeMaterial
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CompositeMaterial.from_dict
+      ~CompositeMaterial.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

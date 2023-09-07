@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.simulator\_info.combine\_info
+=====================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_info
+
+.. autofunction:: combine_info

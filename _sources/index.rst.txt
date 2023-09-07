@@ -7,15 +7,14 @@ f3dasm_simulate
    :hidden:
    :glob:
        
-   apisource/f3dasm_simulate
-   apisource/modules
+   rst_doc_files/simulators
 
 .. include:: readme.rst
 
-Indices and tables
-==================
+.. toctree::
+   :name: apitoc
+   :caption: API
+   :hidden:
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   Code <_autosummary/f3dasm_simulate>
   

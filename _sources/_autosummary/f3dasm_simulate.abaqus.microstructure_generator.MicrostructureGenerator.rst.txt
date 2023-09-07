@@ -1,0 +1,34 @@
+f3dasm\_simulate.abaqus.microstructure\_generator.MicrostructureGenerator
+=========================================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.microstructure_generator
+
+.. autoclass:: MicrostructureGenerator
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MicrostructureGenerator.circle_plot
+      ~MicrostructureGenerator.generate_microstructure
+      ~MicrostructureGenerator.plot_microstructure
+      ~MicrostructureGenerator.rgmsh_plot
+      ~MicrostructureGenerator.sphere_coordinate
+      ~MicrostructureGenerator.sphere_plot
+      ~MicrostructureGenerator.to_abaqus_format
+      ~MicrostructureGenerator.to_crate_format
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

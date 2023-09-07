@@ -1,0 +1,33 @@
+f3dasm\_simulate.abaqus.amplitudesampler
+========================================
+
+
+
+
+
+
+.. automodule:: f3dasm_simulate.abaqus.amplitudesampler
+  
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      AmplitudeGenerator
+   
+   
+
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+f3dasm\_simulate.abaqus.amplitudesampler.AmplitudeGenerator
+===========================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.amplitudesampler
+
+.. autoclass:: AmplitudeGenerator
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AmplitudeGenerator.generate_control_points
+      ~AmplitudeGenerator.get_amplitude
+      ~AmplitudeGenerator.interpolation
+      ~AmplitudeGenerator.plot_amplitude
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

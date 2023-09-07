@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.microstructure.CircleMicrostructure
+===========================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.microstructure
+
+.. autoclass:: CircleMicrostructure
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CircleMicrostructure.from_dict
+      ~CircleMicrostructure.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

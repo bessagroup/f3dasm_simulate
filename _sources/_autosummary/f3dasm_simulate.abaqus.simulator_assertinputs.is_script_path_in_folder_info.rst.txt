@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.simulator\_assertinputs.is\_script\_path\_in\_folder\_info
+==================================================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_assertinputs
+
+.. autofunction:: is_script_path_in_folder_info

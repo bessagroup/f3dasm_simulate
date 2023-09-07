@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.material.ElasticMaterial
+================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.material
+
+.. autoclass:: ElasticMaterial
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ElasticMaterial.from_dict
+      ~ElasticMaterial.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

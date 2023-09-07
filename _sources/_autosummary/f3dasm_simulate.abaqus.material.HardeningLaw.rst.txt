@@ -1,0 +1,33 @@
+f3dasm\_simulate.abaqus.material.HardeningLaw
+=============================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.material
+
+.. autoclass:: HardeningLaw
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~HardeningLaw.plot
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~HardeningLaw.hardening_law_table
+   
+   
+
+   .. rubric:: Methods

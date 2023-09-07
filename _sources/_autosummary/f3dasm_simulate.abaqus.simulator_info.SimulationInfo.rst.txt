@@ -1,0 +1,27 @@
+f3dasm\_simulate.abaqus.simulator\_info.SimulationInfo
+======================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_info
+
+.. autoclass:: SimulationInfo
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SimulationInfo.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

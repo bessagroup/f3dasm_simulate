@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.overwrite\_inputs.overwrite\_config\_with\_design\_parameters
+=====================================================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.overwrite_inputs
+
+.. autofunction:: overwrite_config_with_design_parameters

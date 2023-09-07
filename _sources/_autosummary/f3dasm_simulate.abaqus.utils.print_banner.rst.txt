@@ -1,0 +1,6 @@
+f3dasm\_simulate.abaqus.utils.print\_banner
+===========================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.utils
+
+.. autofunction:: print_banner

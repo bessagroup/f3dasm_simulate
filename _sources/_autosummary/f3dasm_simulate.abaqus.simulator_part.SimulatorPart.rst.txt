@@ -1,0 +1,28 @@
+f3dasm\_simulate.abaqus.simulator\_part.SimulatorPart
+=====================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.simulator_part
+
+.. autoclass:: SimulatorPart
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SimulatorPart.from_dict
+      ~SimulatorPart.to_dict
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Methods

@@ -1,0 +1,33 @@
+f3dasm\_simulate.abaqus.material.RambergHardeningLaw
+====================================================
+
+.. currentmodule:: f3dasm_simulate.abaqus.material
+
+.. autoclass:: RambergHardeningLaw
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: List of Public Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RambergHardeningLaw.plot
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RambergHardeningLaw.hardening_law_table
+   
+   
+
+   .. rubric:: Methods

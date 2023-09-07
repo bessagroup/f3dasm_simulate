@@ -1,0 +1,34 @@
+﻿f3dasm\_simulate
+================
+
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst
+   :recursive:
+
+   f3dasm_simulate.abaqus
+
+
+
+.. automodule:: f3dasm_simulate
+  
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
